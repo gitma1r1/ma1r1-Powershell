@@ -1,3 +1,4 @@
+```powershell
 $VMName = "MAI156-Cisco-WIN10"
 $VHDPath = "D:\HyperV\" + $VMName + "\Virtual Hard Disks\" + $VMName + ".vhdx"
 $ISOPath = "C:\_Install\Windows_Server_2022_eng_mai2022.ISO"
@@ -9,3 +10,4 @@ Set-VMDvdDrive -VMName $VMName -ControllerNumber 1 -Path $ISOPath #Connect *.iso
 Get-VMNetworkAdapter -VMName $VMName | Connect-VMNetworkAdapter -SwitchName ADSL #ADSL
 Start-VM –Name $VMName #Start vm
 Get-VM $VMName #status vm
+```
