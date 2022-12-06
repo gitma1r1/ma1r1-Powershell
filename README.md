@@ -5,9 +5,9 @@ ab14jain GIT   ->    https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9f
 ab14jain GIT   ->    https://github.com/ab14jain/PowerShell
 
 ##### test
-   ```powershell
+
 ab14jain GIT   ->    https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatsheet-ps1
-```
+
 
 
 ### Windows PowerShell-Cheatsheet
