@@ -39,12 +39,13 @@ Set-Service -name BMDNTCSSOAPService221255 -Description "BMDNTCSSoapservice für
 
 ##### network Ping
    ```powershell
-    ping www.googel.at -force                                                                                           #ping in powershell
-    while($true){Test-Connection 8.8.8.8}                                                                               #permanent ping
-    Test-NetConnection bmdntcstest2041                                                                                  #Ping with Boolean return
-    1..254 | ForEach-Object {Test-Connection -ComputerName "192.168.0.$_" -Count 1 -ErrorAction SilentlyContinue}       #IP Spoofing 1-254
-    ipconfig /displaydns                                                                                                #shows the dns
-    (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content                                                            #show public ip
+    ping www.googel.at -force                                                                #ping in powershell
+    while($true){Test-Connection 8.8.8.8}                                                    #permanent ping
+    Test-NetConnection bmdntcstest2041                                                       #Ping with Boolean return
+    1..254 | ForEach-Object 
+    {Test-Connection -ComputerName "192.168.0.$_" -Count 1 -ErrorAction SilentlyContinue}    #IP Spoofing 1-254
+    ipconfig /displaydns                                                                     #shows the dns
+    (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content                                 #show public ip
  ```
  
  ##### network Ping
