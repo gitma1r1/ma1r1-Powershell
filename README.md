@@ -1,4 +1,4 @@
-# Powershell-Skripts
+# Windows PowerShell-Cheatsheet
 ### Windows PowerShell-Cheatsheet
 
 
