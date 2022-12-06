@@ -1,8 +1,5 @@
 # Windows PowerShell-Cheatsheet
-### Windows PowerShell-Cheatsheet
-
-
-##### PowerShell-Version anzeigen
+##### Öffentliche IP anzeigen
 
     (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
     
