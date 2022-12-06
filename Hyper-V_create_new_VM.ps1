@@ -3,7 +3,7 @@ $VHDPath = "D:\HyperV\" + $VMName + "\Virtual Hard Disks\" + $VMName + ".vhdx"
 $ISOPath = "C:\_Install\Windows_Server_2022_eng_mai2022.ISO"
 
 New-VM -Name $VMName -MemoryStartupBytes 8192MB -Path D:\HyperV\ #create vm - RAM 8GB
-New-VHD -Path $VHDPath -SizeBytes 100GB -Dynamic #create dynamically expanding VHD - 60GB
+New-VHD -Path $VHDPath -SizeBytes 100GB -Dynamic #create dynamically expanding VHD - 100GB
 Add-VMHardDiskDrive -VMName $VMName -Path $VHDPath #connect VHD with the vm.
 Set-VMDvdDrive -VMName $VMName -ControllerNumber 1 -Path $ISOPath #Connect *.iso file for the Windows
 Get-VMNetworkAdapter -VMName $VMName | Connect-VMNetworkAdapter -SwitchName ADSL #ADSL
