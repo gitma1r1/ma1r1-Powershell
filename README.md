@@ -4,7 +4,7 @@
 
 ##### PowerShell-Version anzeigen
 
-    $PSVersionTable.PSVersion
+    (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
     
 ##### PowerShell 2 auf PowerShell 3.0 aktualisieren (Windows 7)
 
