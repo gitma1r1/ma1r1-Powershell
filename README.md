@@ -40,7 +40,11 @@
 
 ##### Inhalt einer Datei löschen
 
-    Löschen Sie den Inhalt C:\Dateiname-hier
+   ```ruby
+require 'redcarpet'
+markdown = Redcarpet.new("Hello World!")
+puts markdown.to_html
+```
 
 ##### Entspricht dem Linux-Befehl "tail".
    
