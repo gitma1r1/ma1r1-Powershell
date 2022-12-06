@@ -47,7 +47,7 @@ puts markdown.to_html
 ```
 
 ##### Öffentliche IP anzeigen
-   ```powershell
+```powershell
    (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
 ```
 
