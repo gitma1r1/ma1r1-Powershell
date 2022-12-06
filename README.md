@@ -1,6 +1,5 @@
 # PowerShell
 
-
 > **other Powershell GIT Cheatsheet**
 > - https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatsheet-ps1
 > - https://github.com/ab14jain/PowerShell
@@ -24,8 +23,6 @@
    get-help *-item                                      #Hilfe über alle Befehle mit *-item
    update-help                                          #Hilfe aktuallisieren
 ```
-
-
 
 ##### get-alias
    ```powershell
@@ -53,12 +50,6 @@
     
   Import-Module NTFSSecurity 
   add-ntfsaccess -path D:\temp\ -Account domain\Domänen-Benutzer -AccessRights ReadandExecute #ReadandExecute , Modify
-```
-
-##### Powerhsell Version
-   ```powershell
-$PowershellVersion = ($PSVersionTable).PSVersion | Select-Object major -ExpandProperty major #Powershell Version
-Write-Host "Powershell Version: $PowershellVersion" 
 ```
 
 ##### network Ping
@@ -132,3 +123,9 @@ sqlcmd -E -S instanz\db -i C:\temp\skript.sql  #starts a sql skript invoke
     
    Write-Host "Red " -ForegroundColor red -nonewline; Write-Host "black " -ForegroundColor black -nonewline;  Write-Host "Blue " -ForegroundColor blue; #ForegroundColor
  ```
+ 
+##### Powerhsell Version
+   ```powershell
+$PowershellVersion = ($PSVersionTable).PSVersion | Select-Object major -ExpandProperty major #Powershell Version
+Write-Host "Powershell Version: $PowershellVersion" 
+```
