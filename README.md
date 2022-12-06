@@ -7,50 +7,50 @@ https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatshee
 
 ##### Get-Command & Get-Member
    ```powershell
-    Get-Command                                           #like help in cmd 
-    Get-Command | Sort-Object comand-type                 #sorted output
-    Get-Command -Module hyper-v | Out-GridView            #show all hyper-v cmdlets
+   Get-Command                                           #like help in cmd 
+   Get-Command | Sort-Object comand-type                 #sorted output
+   Get-Command -Module hyper-v | Out-GridView            #show all hyper-v cmdlets
 
-    Get-ChildItem | Get-Member                           #Eigenschaften this gets you everything
-    Get-ChildItem | Get-Member -MemberType Property      #Eigenschaften
+   Get-ChildItem | Get-Member                           #Eigenschaften this gets you everything
+   Get-ChildItem | Get-Member -MemberType Property      #Eigenschaften
 ```
 
 ##### get-help
    ```powershell
-    get-help Get-Process -Examples                       #Hilfe von einem Befehl
-    get-help Get-Process -Online                         #Hilfe online
-    get-help *-item                                      #Hilfe über alle Befehle mit *-item
-    update-help                                          #Hilfe aktuallisieren
+   get-help Get-Process -Examples                       #Hilfe von einem Befehl
+   get-help Get-Process -Online                         #Hilfe online
+   get-help *-item                                      #Hilfe über alle Befehle mit *-item
+   update-help                                          #Hilfe aktuallisieren
 ```
 
 
 
 ##### get-alias
    ```powershell
-    get-alias –Definition Get-ChildItem                  #definition parameter to get all aliases for a cmdlet
-    get-alias -name ls                                   #what command an alias is running
-    get-alias -name %
+   get-alias –Definition Get-ChildItem                  #definition parameter to get all aliases for a cmdlet
+   get-alias -name ls                                   #what command an alias is running
+   get-alias -name %
 ```
 
 ##### /Process killen beenden
    ```powershell
-   Taskkill /T /F /IM bmd*                                  #beendet alle Prozesse mit bmd beginnend     
-   Taskkill /T /F /IM bmd.exe /bmd2.exe                     #beendet 2 bestimmte Prozesse
-   pskill -accepteula bmdntcs.exe                           #beendet bestimmten Prozesse
+  Taskkill /T /F /IM bmd*                                  #beendet alle Prozesse mit bmd beginnend     
+  Taskkill /T /F /IM bmd.exe /bmd2.exe                     #beendet 2 bestimmte Prozesse
+  pskill -accepteula bmdntcs.exe                           #beendet bestimmten Prozesse
 ```
 
 ##### Dienst Beschreibung hinzufügen
    ```powershell
-   Set-Service -name BMDNTCSSOAPService221255 -Description "BMDNTCSSoapservice für 221255- läuft auf TCP Port 12640" #Dienst Beschreibung hinzfügen
+  Set-Service -name BMDNTCSSOAPService221255 -Description "BMDNTCSSoapservice für 221255- läuft auf TCP Port 12640" #Dienst Beschreibung hinzfügen
  ```
  
  ##### Install Module - (Source: http://www.powertheshell.com/)
    ```powershell
-   Install-Module -Name "ISESteroids" -Scope CurrentUser -Repository PSGallery -Force   #Install Module: ISESterioids
-   Start-Steroids
+  Install-Module -Name "ISESteroids" -Scope CurrentUser -Repository PSGallery -Force   #Install Module: ISESterioids
+  Start-Steroids
     
-   Import-Module NTFSSecurity 
-   add-ntfsaccess -path D:\temp\ -Account domain\Domänen-Benutzer -AccessRights ReadandExecute #ReadandExecute , Modify
+  Import-Module NTFSSecurity 
+  add-ntfsaccess -path D:\temp\ -Account domain\Domänen-Benutzer -AccessRights ReadandExecute #ReadandExecute , Modify
 ```
 
 ##### Powerhsell Version
