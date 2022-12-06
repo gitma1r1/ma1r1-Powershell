@@ -6,8 +6,6 @@
 > - https://github.com/ab14jain/PowerShell
 
 
-### Windows PowerShell-Cheatsheet
-
 ##### Get-Command & Get-Member
    ```powershell
    Get-Command                                           #like help in cmd 
