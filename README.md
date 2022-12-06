@@ -1,10 +1,11 @@
-# Windows PowerShell-Cheatsheet
+PowerShell
 
 
 > **other Powershell GIT Cheatsheet**
 > - https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatsheet-ps1
 > - https://github.com/ab14jain/PowerShell
 
+## Windows PowerShell-Cheatsheet
 
 ##### Get-Command & Get-Member
    ```powershell
