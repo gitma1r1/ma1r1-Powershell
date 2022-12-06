@@ -40,20 +40,29 @@ Set-Service -name BMDNTCSSOAPService221255 -Description "BMDNTCSSoapservice für
 ##### network Ping
    ```powershell
     ping www.googel.at -force                                                                #ping in powershell
+    
     while($true){Test-Connection 8.8.8.8}                                                    #permanent ping
+    
     Test-NetConnection bmdntcstest2041                                                       #Ping with Boolean return
     1..254 | ForEach-Object 
+    
     {Test-Connection -ComputerName "192.168.0.$_" -Count 1 -ErrorAction SilentlyContinue}    #IP Spoofing 1-254
+    
     ipconfig /displaydns                                                                     #shows the dns
+    
     (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content                                 #show public ip
  ```
  
  ##### network Ping
    ```powershell
     Test-NetConnection -computer Computername -Port 89                  #Test Port
+    
     dism /online /Enable-Feature /FeatureName:TelnetClient              # Telnet installieren
+    
     New-Object System.Net.Sockets.TcpClient("192.168.0.24", 3389)       #alternative zu Telnet
+    
     netstat -an |find /i "82"                                           # Port finden
+    
     cmd telnet 192.168.0.24 3389                                        #Telnet verbindung
  ```
  
