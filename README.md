@@ -48,7 +48,7 @@ puts markdown.to_html
 
 ##### Öffentliche IP anzeigen
    ```powershell
-    (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
+   (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
 ```
 
 ##### Entspricht dem Linux-Befehl "tail".
