@@ -47,10 +47,10 @@ https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatshee
  ##### Install Module - (Source: http://www.powertheshell.com/)
    ```powershell
    Install-Module -Name "ISESteroids" -Scope CurrentUser -Repository PSGallery -Force   #Install Module: ISESterioids
-    Start-Steroids
+   Start-Steroids
     
-    Import-Module NTFSSecurity 
-    add-ntfsaccess -path D:\temp\ -Account domain\Domänen-Benutzer -AccessRights ReadandExecute #ReadandExecute , Modify
+   Import-Module NTFSSecurity 
+   add-ntfsaccess -path D:\temp\ -Account domain\Domänen-Benutzer -AccessRights ReadandExecute #ReadandExecute , Modify
 ```
 
 ##### Powerhsell Version
@@ -98,8 +98,7 @@ Write-Host "Powershell Version: $PowershellVersion"
  
   ##### rename regedit File
    ```powershell
-   rename-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager' -Name
-"PendingFileRenameOperations" -NewName "_PendingFileRenameOperations"                     #PendingFileRenameOperations
+   rename-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager' -Name "PendingFileRenameOperations" -NewName "_PendingFileRenameOperations" #PendingFileRenameOperations
  ```
  
    ##### SQL 
