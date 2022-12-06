@@ -4,10 +4,11 @@
 ab14jain GIT   ->    https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatsheet-ps1
 ab14jain GIT   ->    https://github.com/ab14jain/PowerShell
 
-### 2.2 PowerShell Versions
-> **PowerShell 1.0**
-> - Installed but not enabled on windows Vista and Server 2008                                   #Hilfe aktuallisieren
-
+### other Powershell GIT Cheatsheet
+> **ab14jain GIT**
+> - https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatsheet-ps1
+> **ab14jain GIT - PowerShell for beginners**
+> - https://github.com/ab14jain/PowerShell
 
 
 ### Windows PowerShell-Cheatsheet
