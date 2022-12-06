@@ -4,9 +4,12 @@
 ab14jain GIT   ->    https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatsheet-ps1
 ab14jain GIT   ->    https://github.com/ab14jain/PowerShell
 
-##### test
+##### get-help
 
-ab14jain GIT   ->    https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatsheet-ps1
+   get-help Get-Process -Examples                       #Hilfe von einem Befehl
+   get-help Get-Process -Online                         #Hilfe online
+   get-help *-item                                      #Hilfe über alle Befehle mit *-item
+   update-help                                          #Hilfe aktuallisieren
 
 
 
