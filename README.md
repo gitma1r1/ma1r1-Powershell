@@ -110,15 +110,20 @@ sqlcmd -E -S instanz\db -i C:\temp\skript.sql  #starts a sql skript invoke
  
   ##### Windows Stuff
    ```powershell
-   Clear-RecycleBin -Force                                                                        #Papierkorb leeren
+   
+   powercfg -SETACTIVE 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c           #Höchstleistung
+   powercfg -SETACTIVE 381b4222-f694-41f0-9685-ff5bb260df2e           #Ausbalanciert
+   powercfg -SETACTIVE a1841308-3541-4fab-bc81-f71556f20b4a           #Energiesparmodus
+
+   Clear-RecycleBin -Force                                            #Papierkorb leeren
 
    (Get-WmiObject -Namespace root/WMI -Class WmiMonitorBrightnessMethods).WmiSetBrightness(1,100) #Helligkeit 100 ist der Wert für die Helligkeit
 
    Get-WmiObject win32_battery | Select-Object -expandProperty EstimatedChargeRemaining           #Akku Anzeige %
     
-  (Get-WmiObject -Class Win32_PhysicalMemory | Select-Object -expandProperty Capacity)/1GB       #Ram Auslesen und auf GB umrechnen
+  (Get-WmiObject -Class Win32_PhysicalMemory | Select-Object -expandProperty Capacity)/1GB        #Ram Auslesen und auf GB umrechnen
 
-   Export-Icon C:\windows\system32\imageres.dll                                               #export ico example:shell32.dll #dsuiext.dll
+   Export-Icon C:\windows\system32\imageres.dll                                                   #export ico example:shell32.dll #dsuiext.dll
  ```
 
  ##### ReadHost / Write-Host
