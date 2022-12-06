@@ -16,6 +16,17 @@ foreach ($Folder in $Folders) {
 }
 ```
 
+##### CRW SQL DB SingleUser
+
+   ```powershell
+
+foreach () {
+    if (){
+  
+    }
+}
+```
+
 ##### Check Adobe Read installed on RDSH
    ```powershell
 $ResultText = ""
