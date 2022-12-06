@@ -1,38 +1,43 @@
 # Windows PowerShell-Cheatsheet
 
 ##### Get-Command & Get-Member
-
+   ```powershell
     Get-Command                                 #so wie help in der cmd 
     Get-Command | Sort-Object comand-type       #sorted output
     Get-Command -Module hyper-v | Out-GridView  #show all hyper-v cmdlets
 
     Get-ChildItem | Get-Member                      #Eigenschaften this gets you everything
     Get-ChildItem | Get-Member -MemberType Property #Eigenschaften
+```
 
 ##### get-help
-
+   ```powershell
     get-help Get-Process -Examples #hilfe von einem Befehl
     get-help Get-Process -Online   #help online
     get-help *-item                #Hilfe über alle Befehle mit *-item
     update-help                    #Hilfe aktuallisieren
+```
 
 ##### get-alias
-
+   ```powershell
     get-alias –Definition Get-ChildItem   #definition parameter to get all aliases for a cmdlet
     get-alias -name ls                    #what command an alias is running
     get-alias -name %
+```
 
 
 ##### get-alias
-
+   ```powershell
     get-alias –Definition Get-ChildItem   #definition parameter to get all aliases for a cmdlet
     get-alias -name ls                    #what command an alias is running
     get-alias -name %
-    
+```
+
 ##### Öffentliche IP anzeigen
-
+   ```powershell
     (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
-    
+ ```
+ 
 ##### PowerShell 2 auf PowerShell 3.0 aktualisieren (Windows 7)
 
     // In der cmd-Eingabeaufforderung:
@@ -47,7 +52,7 @@ puts markdown.to_html
 ```
 
 ##### Öffentliche IP anzeigen
-```powershell
+   ```powershell
    (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
 ```
 
