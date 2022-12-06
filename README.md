@@ -9,9 +9,9 @@
 
 ##### Get-Command & Get-Member
    ```powershell
-   Get-Command                                           #like help in cmd 
-   Get-Command | Sort-Object comand-type                 #sorted output
-   Get-Command -Module hyper-v | Out-GridView            #show all hyper-v cmdlets
+   Get-Command                                          #like help in cmd 
+   Get-Command | Sort-Object comand-type                #sorted output
+   Get-Command -Module hyper-v | Out-GridView           #show all hyper-v cmdlets
 
    Get-ChildItem | Get-Member                           #Eigenschaften this gets you everything
    Get-ChildItem | Get-Member -MemberType Property      #Eigenschaften
@@ -36,9 +36,9 @@
 
 ##### /Process killen beenden
    ```powershell
-  Taskkill /T /F /IM bmd*                                  #beendet alle Prozesse mit bmd beginnend     
-  Taskkill /T /F /IM bmd.exe /bmd2.exe                     #beendet 2 bestimmte Prozesse
-  pskill -accepteula bmdntcs.exe                           #beendet bestimmten Prozesse
+  Taskkill /T /F /IM bmd*                               #beendet alle Prozesse mit bmd beginnend     
+  Taskkill /T /F /IM bmd.exe /bmd2.exe                  #beendet 2 bestimmte Prozesse
+  pskill -accepteula bmdntcs.exe                        #beendet bestimmten Prozesse
 ```
 
 ##### Dienst Beschreibung hinzufügen
