@@ -45,7 +45,10 @@ require 'redcarpet'
 markdown = Redcarpet.new("Hello World!")
 puts markdown.to_html
 ```
-
+##### Öffentliche IP anzeigen
+   ```powershell
+    (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
+    ```
 ##### Entspricht dem Linux-Befehl "tail".
    
     // Beendet die letzten 3 Zeilen der angegebenen Datei:
