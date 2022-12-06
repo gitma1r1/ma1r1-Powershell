@@ -1,9 +1,8 @@
 # Windows PowerShell-Cheatsheet
 
-### other Powershell GIT Cheatsheet
-> **ab14jain GIT**
+
+> **other Powershell GIT Cheatsheet**
 > - https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatsheet-ps1
-> **ab14jain GIT - PowerShell for beginners**
 > - https://github.com/ab14jain/PowerShell
 
 
