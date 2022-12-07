@@ -73,11 +73,11 @@
    ```powershell
    Test-NetConnection -computer Computername -Port 89                  #Test Port
     
-   dism /online /Enable-Feature /FeatureName:TelnetClient              # Telnet installieren
+   dism /online /Enable-Feature /FeatureName:TelnetClient              #Telnet installieren
     
    New-Object System.Net.Sockets.TcpClient("192.168.0.24", 3389)       #alternative zu Telnet
     
-   netstat -an |find /i "82"                                           # Port finden
+   netstat -an |find /i "82"                                           #Port finden
     
    cmd telnet 192.168.0.24 3389                                        #Telnet verbindung
  ```
