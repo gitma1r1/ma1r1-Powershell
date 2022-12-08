@@ -8,7 +8,12 @@
 
 ##### Azure Naming Convention
 
-Resource Group	rg-​
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Resource Group  | rg-​ |
+| Content Cell  | Content Cell  |
+
+	
 Virtual Network	vnet-
 Subnet	snet-
 Network Security Group	nsg-
