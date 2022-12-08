@@ -1,8 +1,7 @@
 # Azure Cloud Powershell-Cheatsheet
 
 
-> **MS quick start Azure Powershell Cloud:**
-> https://learn.microsoft.com/de-de/azure/cloud-shell/quickstart-powershell
+> **MS quick start Azure Powershell Cloud: https://learn.microsoft.com/de-de/azure/cloud-shell/quickstart-powershell**
 
 
 #### Azure Naming Convention
