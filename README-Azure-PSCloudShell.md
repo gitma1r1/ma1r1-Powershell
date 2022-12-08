@@ -6,7 +6,7 @@
 
 ## Azure Cloud Powershell-Cheatsheet
 
-##### Azure Naming Convention
+#### Azure Naming Convention
 
 | First Header  | Second Header |
 | ------------- | ------------- |
