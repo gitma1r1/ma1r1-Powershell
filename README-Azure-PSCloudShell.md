@@ -2,7 +2,7 @@
 
 
 > **MS quick start Azure Powershell Cloud:**
-> - https://learn.microsoft.com/de-de/azure/cloud-shell/quickstart-powershell
+> https://learn.microsoft.com/de-de/azure/cloud-shell/quickstart-powershell
 
 
 #### Azure Naming Convention
