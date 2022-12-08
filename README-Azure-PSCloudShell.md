@@ -6,6 +6,19 @@
 
 ## Azure Cloud Powershell-Cheatsheet
 
+##### Azure Naming Convention
+
+Resource Group	rg-​
+Virtual Network	vnet-
+Subnet	snet-
+Network Security Group	nsg-
+Public IP	pip-
+Virtual Machine	aspch-
+VM Storage account	stvm
+NIC	_eth0
+Disk	_disk0
+	_disk1
+	etc…
 
 ##### Install AZ Module for Powershell 7 (need first installed on Windows)
    ```powershell
