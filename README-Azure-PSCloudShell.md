@@ -1,6 +1,5 @@
 # Azure Cloud Powershell
 
-## MS quick start
 
 > **MS quick start:**
 > - https://learn.microsoft.com/de-de/azure/cloud-shell/quickstart-powershell
@@ -8,20 +7,12 @@
 ## Azure Cloud Powershell-Cheatsheet
 
 
-##### Get-Command & Get-Member
+##### Install AZ Module for Powershell 7 (need first installed on Windows)
    ```powershell
-   Get-Command                                          #like help in cmd 
-   Get-Command | Sort-Object comand-type                #sorted output
-   Get-Command -Module hyper-v | Out-GridView           #show all hyper-v cmdlets
+Install-Module -Name AZ -AllowClobber -Force                                           #Install AZ Module (Powrshell 7)
 
-   Get-ChildItem | Get-Member                           #Eigenschaften this gets you everything
-   Get-ChildItem | Get-Member -MemberType Property      #Eigenschaften
-```
+get-installedmodule -name az -allversions | Select-Object -Property Name, Version      #get Version of AZ module
 
-##### get-help
-   ```powershell
-   get-help Get-Process -Examples                       #Hilfe von einem Befehl
-   get-help Get-Process -Online                         #Hilfe online
-   get-help *-item                                      #Hilfe über alle Befehle mit *-item
-   update-help                                          #Hilfe aktuallisieren
+connect-azaccount                                                                      #Login the Azure Account -> open Browser for Login
+
 ```
