@@ -19,7 +19,7 @@
 | Disk | _disk0 |
 | Disk | _disk1 |
 
-> **MS naming and tagging: https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging**
+> **MS naming & tagging: https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging**
 
 > **Command-List MS Learn: https://learn.microsoft.com/en-us/cli/azure/reference-index?view=azure-cli-latest**
 
