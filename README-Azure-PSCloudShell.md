@@ -1,29 +1,28 @@
-# Azure Cloud Powershell
+# Azure Cloud Powershell-Cheatsheet
 
 
 > **MS quick start:**
 > - https://learn.microsoft.com/de-de/azure/cloud-shell/quickstart-powershell
 
-## Azure Cloud Powershell-Cheatsheet
 
 #### Azure Naming Convention
 
 | First Header  | Second Header |
 | ------------- | ------------- |
 | Resource Group  | rg-​ |
-| Content Cell  | Content Cell  |
+| Virtual Network  | vnet- |
+| Subnet | snet- |
+| Network Security Group | nsg- |
+| Public IP | pip- |	
+| Virtual Machine | aspch- |
+| VM Storage account | stvm |	
+| NIC | _eth0 |
+| Disk | _disk0 |
+| Disk | _disk1 |
 
-	
-Virtual Network	vnet-
-Subnet	snet-
-Network Security Group	nsg-
-Public IP	pip-
-Virtual Machine	aspch-
-VM Storage account	stvm
-NIC	_eth0
-Disk	_disk0
-	_disk1
-	etc…
+> **MS naming and tagging:**
+> - https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging
+
 
 ##### Install AZ Module for Powershell 7 (need first installed on Windows)
    ```powershell
