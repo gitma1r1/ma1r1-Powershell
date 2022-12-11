@@ -1,6 +1,6 @@
-﻿$log = "$home\Desktop\Log.txt"
-$pathtomonitor = "D:\temp\test123"
-$timeout = 1000
+﻿$log = "$home\Desktop\Log.txt" #Log Folder
+$pathtomonitor = "D:\temp\test123" #Folder to monitor
+$timeout = 1000 # wait between each while
 
 try {
 $FileSystemWatcher = New-Object System.IO.FileSystemWatcher $pathtomonitor
