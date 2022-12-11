@@ -6,7 +6,7 @@ $menu=@"
 Q Quit
  
 Select a task by number or Q to quit
-"@
+"@ #def. var. menu
 
 Function Invoke-Menu {
     [cmdletbinding()]
@@ -29,40 +29,50 @@ $menuprompt+="`n" #add a return
 $menuprompt+="-"*$title.Length #add an underline
 $menuprompt+="`n" #add another return
 $menuPrompt+=$menu #add the menu
- 
+
 Read-Host -Prompt $menuprompt
 
-}
+} #end function for the menu
 
 Do {
     Switch (Invoke-Menu -menu $menu -title "Install-Support-Tool by mai156" -clear) { #use a Switch construct to take action depending on what menu choice is selected.
+     
      "1" {
-        # Get the hostname
-        $hostname = $env:COMPUTERNAME # Get the hostname 1st try
-        if ($hostname -eq $null){$hostname = hostname} # Get hostname 2nd try
-        if ($hostname -eq $null){$hostname = gc env:computername} # Get hostname 3nd try
+        ##Get the hostname
+        $hostname = $env:COMPUTERNAME #Get the hostname - 1st try
+        if ($hostname -eq $null -or $hostname.Count -eq 0){$hostname = hostname} #Get hostname - 2nd try
+        if ($hostname -eq $null -or $hostname.Count -eq 0){$hostname = gc env:computername} #Get hostname - 3nd try
 
-        # Get the OS name and version
-        $os = Get-ComputerInfo -Property "OSName", "OSVersion" #Get the OS name and version 1st try
-        if ($os -eq $null){$os = (Get-WmiObject win32_operatingsystem).caption} #Get the OS name 2nd try
+        ##Get the OS name and version
+        $os = $null
+        $os = Get-ComputerInfo -Property "OSName", "OSVersion" #Get the OS name and version - 1st try
+        if ($os -eq $null -or $os.Count -eq 0){
+            $os = (Get-WmiObject win32_operatingsystem).caption
+            $os += (Get-WmiObject win32_operatingsystem).Version
 
-        # Get the IP address
+        } #Get the OS name - 2nd try
+
+        #Get the IP address
         $ipAddress = Get-NetIPAddress | Where-Object {$_.AddressFamily -eq "IPv4"} | Select-Object -First 1 #Get the IP address 1st try
-        if ($ipAddress -eq $null){$ipAddress = (Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter IPEnabled=TRUE).IPAddress[0]} # Get the IP address 2nd try  
+        if ($ipAddress -eq $null -or $ipAddress.Count -eq 0){$ipAddress = (Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter IPEnabled=TRUE).IPAddress[0]} # Get the IP address 2nd try  
 
-        # Get the antivirus product
-        $antivirusProduct = ""
-        $Virenscanners = Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct
+        #Get the antivirus product
+        $antivirusProduct = $null
+        $Virenscanners = Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct -ErrorAction SilentlyContinue
             foreach($Virenscanner in $Virenscanners){
                 $antivirusProduct += $Virenscanner.displayName
             } #Get the antivirus product 1st try
-        if ($antivirusProduct -eq $null){$antivirusProduct = (Get-MpComputerStatus).AntivirusProduct} #Get the antivirus product 2st try
-        if ($antivirusProduct -eq $null){
+        if ($antivirusProduct -eq $null -or $antivirusProduct.Count -eq 0){
+            $antivirusProdu = Get-MpComputerStatus -ErrorAction SilentlyContinue
+            $antivirusProduct = $antivirusProdu.AntivirusProduct 
+
+        } #Get the antivirus product 2st try
+        if ($antivirusProduct -eq $null -or $antivirusProduct.Count -eq 0){
             $wmiQuery_avp = "SELECT * FROM AntiVirusProduct" 
             $AntivirusProduct_ = Get-WmiObject -Namespace "root\SecurityCenter2" -Query $wmiQuery_avp  @psboundparameters -ErrorVariable myError -ErrorAction 'SilentlyContinue'             
             $antivirusProduct = $AntivirusProduct_.displayName
         } #Get antivirus product 3nd try
-        if ($antivirusProduct -eq $null){$antivirusProduct = Get-MpComputerStatus} #Get antivirus product 4nd try
+        if ($antivirusProduct -eq $null -or $antivirusProduct.Count -eq 0){$antivirusProduct = Get-MpComputerStatus -ErrorAction SilentlyContinue} #Get antivirus product 4nd try
 
         # Check if SQL Server is installed
         $sqlServerInstalled = Get-ItemProperty -Path "HKLM:\Software\Microsoft\Microsoft SQL Server" -ErrorAction SilentlyContinue
@@ -85,7 +95,11 @@ Do {
         Write-Host "Hostname: $hostname" -ForegroundColor Yellow
         Write-Host "OS: $($os.OSName) $($os.OSVersion)" -ForegroundColor Yellow
         Write-Host "IP Address: $($ipAddress.IPAddress)" -ForegroundColor Yellow
-        Write-Host "Antivirus Product: $antivirusProduct" -ForegroundColor Yellow
+        if ($antivirusProduct -eq $null -or $antivirusProduct.Count -eq 0) {
+           Write-Host "Antivirus Product: not found! Windows Server?" -ForegroundColor Red
+        }else{
+            Write-Host "Antivirus Product: $antivirusProduct" -ForegroundColor Yellow
+            }
         Write-Host "SQL: $sqlServerInstalled_String" -ForegroundColor Yellow
         if ($sqlServerInstalled_String -like "SQL Server is installed on this machine"){Write-Host "SQL Version:"$SQLVersion_main $SQLVersion_sub -ForegroundColor Yellow}
         pause
@@ -144,11 +158,11 @@ Do {
         Write-Host "RegFile: PendingFileRenameOperations wurde angepasst"
         pause
          }
-     "Q" {Write-Host "Goodbye" -ForegroundColor Cyan
+     "Q" {Write-Host "Goodbye by ma1r1" -ForegroundColor Cyan
          Return
          }
      Default {Write-Warning "Invalid Choice. Try again."
               sleep -milliseconds 750}
     } #switch
-} While ($True)
-#End
+} While ($True) #make the action
+##End-Script
