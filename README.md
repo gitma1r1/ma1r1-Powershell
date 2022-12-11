@@ -117,7 +117,7 @@ sqlcmd -E -S instanz\db -i C:\temp\skript.sql  #starts a sql skript invoke
    Export-Icon C:\windows\system32\imageres.dll                                                   #export ico example:shell32.dll #dsuiext.dll
  ```
  
-    ##### Get the antivirus product 
+  ##### Get the antivirus product 
    ```powershell
 $Virenscanners = Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct
             foreach($Virenscanner in $Virenscanners){
@@ -129,7 +129,7 @@ $AntivirusProduct_ = Get-WmiObject -Namespace "root\SecurityCenter2" -Query $wmi
 (Get-MpComputerStatus).AntivirusProduct
  ```
  
-     ##### Check if SQL Server is installed
+ ##### Check if SQL Server is installed
    ```powershell
         $sqlServerInstalled = Get-ItemProperty -Path "HKLM:\Software\Microsoft\Microsoft SQL Server" -ErrorAction SilentlyContinue
         if ($sqlServerInstalled) {
@@ -146,12 +146,6 @@ $AntivirusProduct_ = Get-WmiObject -Namespace "root\SecurityCenter2" -Query $wmi
             $sqlServerInstalled_String = "SQL Server is not installed on this machine"
         }
  ```
- 
- 
- 
- 
- 
- 
 
  ##### ReadHost / Write-Host
    ```powershell
