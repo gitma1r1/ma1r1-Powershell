@@ -116,6 +116,42 @@ sqlcmd -E -S instanz\db -i C:\temp\skript.sql  #starts a sql skript invoke
 
    Export-Icon C:\windows\system32\imageres.dll                                                   #export ico example:shell32.dll #dsuiext.dll
  ```
+ 
+    ##### Get the antivirus product 
+   ```powershell
+$Virenscanners = Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct
+            foreach($Virenscanner in $Virenscanners){
+                $antivirusProduct += $Virenscanner.displayName
+
+$wmiQuery_avp = "SELECT * FROM AntiVirusProduct" 
+$AntivirusProduct_ = Get-WmiObject -Namespace "root\SecurityCenter2" -Query $wmiQuery_avp  @psboundparameters -ErrorVariable myError -ErrorAction 'SilentlyContinue'   $antivirusProduct = $AntivirusProduct_.displayName
+
+(Get-MpComputerStatus).AntivirusProduct
+ ```
+ 
+     ##### Check if SQL Server is installed
+   ```powershell
+        $sqlServerInstalled = Get-ItemProperty -Path "HKLM:\Software\Microsoft\Microsoft SQL Server" -ErrorAction SilentlyContinue
+        if ($sqlServerInstalled) {
+            $sqlServerInstalled_String = "SQL Server is installed on this machine"
+
+            #Get installed SQL Versions
+            $SQLVersion_regs = (get-itemproperty 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server').InstalledInstances
+            foreach ($SQLVersion_reg in $SQLVersion_regs){
+               $SQLVersion_ = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL').$SQLVersion_reg
+               $SQLVersion_main = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\$SQLVersion_\Setup").Edition
+               $SQLVersion_sub = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\$SQLVersion_\Setup").Version
+            }
+        } else {
+            $sqlServerInstalled_String = "SQL Server is not installed on this machine"
+        }
+ ```
+ 
+ 
+ 
+ 
+ 
+ 
 
  ##### ReadHost / Write-Host
    ```powershell
