@@ -146,16 +146,34 @@ Do {
         if ($getactivePowerPlan -like "*8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c*"){
             Write-Host Windows Energieoptionen sind schon auf Höchstleistung gesetzt -ForegroundColor Yellow
         }else{
+        $confirmation = Read-Host "Energieoptionen Höchstleistung setzen - Do you want to continue? [1 to continue] " 
+            if ($confirmation -eq '1') {
         powercfg -SETACTIVE 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c 
         $getactivePowerPlan_new = PowerCfg.exe /GETACTIVESCHEME
         Write-Host "Windows Energieoptionen wurde auf $getactivePowerPlan_new gesetzt" -ForegroundColor Yellow
+        }
         }
         pause
         }
     "4" {
         #Regwert ändern PendingFileRenameOperations
-        rename-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager' -Name "PendingFileRenameOperations" -NewName "_PendingFileRenameOperations" 
-        Write-Host "RegFile: PendingFileRenameOperations wurde angepasst"
+
+        if (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager' -Name _PendingFileRenameOperations -ErrorAction SilentlyContinue) {
+        Write-Host 'Info: found renamed _PendingFileRenameOperations - not necessary? check manuel' -ForegroundColor Red
+            #Remove-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\" -name "_PendingFileRenameOperations" -ErrorAction SilentlyContinue
+        Return
+        }
+
+        if (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager' -Name PendingFileRenameOperations -ErrorAction SilentlyContinue) {
+           $confirmation = Read-Host "rename PendingFile - Do you want to continue? [1 to continue] "
+            if ($confirmation -eq '1') {
+                rename-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager' -Name "PendingFileRenameOperations" -NewName "_PendingFileRenameOperations" -ErrorAction SilentlyContinue
+                if (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager' -Name PendingFileRenameOperations -ErrorAction SilentlyContinue) {Write-Host "keine Rechte? Skript als Admin starten" -ForegroundColor Red}
+                if (Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager' -Name _PendingFileRenameOperations -ErrorAction SilentlyContinue) {Write-Host "RegFile: PendingFileRenameOperations wurde angepasst" -ForegroundColor Yellow}
+            }
+        }else{
+            Write-Host 'PendingFileRenameOperations NOT exist - not necessary? check manuel' -ForegroundColor Red
+        }
         pause
          }
      "Q" {Write-Host "Goodbye by ma1r1" -ForegroundColor Cyan
