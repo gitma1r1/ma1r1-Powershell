@@ -107,6 +107,8 @@ sqlcmd -E -S instanz\db -i C:\temp\skript.sql  #starts a sql skript invoke
    powercfg -SETACTIVE a1841308-3541-4fab-bc81-f71556f20b4a           #Energiesparmodus
 
    Clear-RecycleBin -Force                                            #Papierkorb leeren
+   
+   Remove-SmbMapping -RemotePath \\server\share -LocalPath Z: -Force  #remove SMBShare
 
    (Get-WmiObject -Namespace root/WMI -Class WmiMonitorBrightnessMethods).WmiSetBrightness(1,100) #Helligkeit 100 ist der Wert für die Helligkeit
 
