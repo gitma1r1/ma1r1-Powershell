@@ -123,6 +123,29 @@ $LocalTempDir = $env:TEMP; $ChromeInstaller = "ChromeInstaller.exe"; (new-object
    
  ```
  
+   ##### Check if the correct IP Syntax is returned
+   ```powershell
+$input8 = "192.168.1.11"
+$Octet = '(?:0?0?[0-9]|0?[1-9][0-9]|1[0-9]{2}|2[0-5][0-5]|2[0-4][0-9])' #matches 0-255, and not higher than 255
+[regex] $IPv4Regex = "^(?:$Octet\.){3}$Octet$" #match an actual IP address instead of a number between 0 and 255 on its own
+'1.10.100.0' -match $IPv4Regex #Check
+if ("$input8" -match $IPv4Regex){
+[System.Windows.Forms.MessageBox]::Show("Correct IP syntax...")
+}else{
+[System.Windows.Forms.MessageBox]::Show("wronge IP syntax...")
+}
+ ```
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   ##### Get the antivirus product 
    ```powershell
 $Virenscanners = Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct
