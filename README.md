@@ -80,6 +80,8 @@
    netstat -an |find /i "82"                                           #Port finden
     
    cmd telnet 192.168.0.24 3389                                        #Telnet verbindung
+   
+   foreach ($port in 1..104) {If (($a=Test-NetConnection srvfs01 -Port $port -WarningAction SilentlyContinue).tcpTestSucceeded -eq $true){ "TCP port $port is open!"}}
  ```
  
   ##### network stuff
