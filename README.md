@@ -190,3 +190,15 @@ $AntivirusProduct_ = Get-WmiObject -Namespace "root\SecurityCenter2" -Query $wmi
 $PowershellVersion = ($PSVersionTable).PSVersion | Select-Object major -ExpandProperty major #Powershell Version
 Write-Host "Powershell Version: $PowershellVersion" 
 ```
+
+##### Exchange all Adress + Alias)
+   ```powershell
+Get-Mailbox -ResultSize Unlimited -OrganizationalUnit "OU=211759,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" | Select DisplayName,PrimarySmtpAddress, @{Name="EmailAddresses";Expression={($_.EmailAddresses | Where-Object {$_ -clike "smtp*"} | ForEach-Object {$_ -replace "smtp:",""}) -join ","}} | Sort-Object DisplayName | export-csv '\\ASP-Admin\D$\UserPST\Temp\testsss.csv' -Delimiter ";" -NoType -Encoding UTF8  
+
+```
+
+
+
+
+
+
