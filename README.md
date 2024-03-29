@@ -9,7 +9,9 @@
    ```powershell
 
    # Get-Command Example
-   Get-Command                                          #like help in cmd 
+   Get-Command                                          #like help in cmd
+   Get-Command -Module Microsoft*                            # Retrieves a list of all the PowerShell commands exported from modules named Microsoft*
+   Get-Command -Name *item                                   # Retrieves a list of all commands (native binaries + PowerShell commands) ending in "item"
    Get-Command | Sort-Object comand-type                #sorted output
    Get-Command -Module hyper-v | Out-GridView           #show all hyper-v cmdlets
 
