@@ -6,7 +6,7 @@
 
 ## Windows PowerShell-Cheatsheet
 
-##### Get-Command / Get-Member / Get-Help
+##### Get-Command / Get-Member / Get-Help / Get-Alias
    ```powershell
    Get-Command                                          #like help in cmd 
    Get-Command | Sort-Object comand-type                #sorted output
@@ -19,10 +19,7 @@
    get-help Get-Process -Online                         #Hilfe online
    get-help *-item                                      #Hilfe über alle Befehle mit *-item
    update-help                                          #Hilfe aktuallisieren
-```
 
-##### get-alias
-   ```powershell
    get-alias –Definition Get-ChildItem                  #definition parameter to get all aliases for a cmdlet
    get-alias -name ls                                   #what command an alias is running
    get-alias -name %
@@ -49,9 +46,11 @@
   add-ntfsaccess -path D:\temp\ -Account domain\Domänen-Benutzer -AccessRights ReadandExecute #ReadandExecute , Modify
 ```
 
-##### network Ping
+##### Network - Ping / Port / stuff
    ```powershell
-   
+
+   #Network Ping
+
    ping www.googel.at -force                                                                #ping in powershell
     
    while($true){Test-Connection 8.8.8.8}                                                    #permanent ping
@@ -64,10 +63,9 @@
    ipconfig /displaydns                                                                     #shows the dns
     
    (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content                                 #show public ip
- ```
  
- ##### network Port
-   ```powershell
+   #Network Port
+
    Test-NetConnection -computer Computername -Port 89                  #Test Port
     
    dism /online /Enable-Feature /FeatureName:TelnetClient              #Telnet installieren
@@ -79,13 +77,13 @@
    cmd telnet 192.168.0.24 3389                                        #Telnet verbindung
    
    foreach ($port in 1..104) {If (($a=Test-NetConnection srvfs01 -Port $port -WarningAction SilentlyContinue).tcpTestSucceeded -eq $true){ "TCP port $port is open!"}}
- ```
- 
-  ##### network stuff
-   ```powershell
-  netsh.exe wlan show profiles name=’A1-morty-5G’ key=clear           #Wlan SSID und Kennwort auslesen
+
+   # Network stuff
+
+   netsh.exe wlan show profiles name=’A1-morty-5G’ key=clear           #Wlan SSID und Kennwort auslesen
     
-  netsh wlan show networks                                            #Wlan SSID auslesen
+   netsh wlan show networks                                            #Wlan SSID auslesen
+
  ```
  
   ##### rename regedit File
