@@ -197,6 +197,13 @@ Get-Mailbox -ResultSize Unlimited -OrganizationalUnit "OU=211759,OU=AT,OU=ASP-Ku
 
 ```
 
+##### Speicherplatz C:\Windows
+   ```powershell
+DISM.exe /Online /Cleanup-Image /StartComponentCleanup /ResetBase
+
+```
+
+
 
 
 
