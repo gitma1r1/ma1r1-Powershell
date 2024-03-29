@@ -1,4 +1,4 @@
-# PowerShell Befehle
+# ma1r1 - PowerShell Befehle
 
 > **other Powershell GIT Cheatsheet**
 > - https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatsheet-ps1
@@ -6,7 +6,7 @@
 
 ## Windows PowerShell-Cheatsheet
 
-##### Get-Command & Get-Member
+##### Get-Command / Get-Member / Get-Help
    ```powershell
    Get-Command                                          #like help in cmd 
    Get-Command | Sort-Object comand-type                #sorted output
@@ -14,10 +14,7 @@
 
    Get-ChildItem | Get-Member                           #Eigenschaften this gets you everything
    Get-ChildItem | Get-Member -MemberType Property      #Eigenschaften
-```
 
-##### get-help
-   ```powershell
    get-help Get-Process -Examples                       #Hilfe von einem Befehl
    get-help Get-Process -Online                         #Hilfe online
    get-help *-item                                      #Hilfe über alle Befehle mit *-item
