@@ -145,7 +145,7 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
 ```
 
  
-  ##### Windows Stuff
+  ##### Chapter 5 - Windows Stuff
    ```powershell
 
    #Energieeinstellungen
@@ -178,6 +178,8 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
    $LocalTempDir = $env:TEMP; $ChromeInstaller = "ChromeInstaller.exe"; (new-object    System.Net.WebClient).DownloadFile('http://dl.google.com/chrome/install/375.126/chrome_installer.exe', "$LocalTempDir\$ChromeInstaller"); &          "$LocalTempDir\$ChromeInstaller" /silent /install; $Process2Monitor =  "ChromeInstaller"; Do { $ProcessesFound = Get-Process | ?{$Process2Monitor -contains $_.Name} | Select-Object -ExpandProperty Name; If ($ProcessesFound) { "Still running:    $($ProcessesFound -join ', ')" | Write-Host; Start-Sleep -Seconds 2 } else { rm "$LocalTempDir\$ChromeInstaller" -ErrorAction SilentlyContinue -Verbose } } Until (!$ProcessesFound) #Install Google Chrome
    
  ```
+
+   ##### Chapter 6 - Examples
  
    ##### Check if the correct IP Syntax is returned
    ```powershell
@@ -193,26 +195,6 @@ if ("$input8" -match $IPv4Regex){
  ```
  
  
- 
- ##### Check if SQL Server is installed
-   ```powershell
-        $sqlServerInstalled = Get-ItemProperty -Path "HKLM:\Software\Microsoft\Microsoft SQL Server" -ErrorAction SilentlyContinue
-        if ($sqlServerInstalled) {
-            $sqlServerInstalled_String = "SQL Server is installed on this machine"
-
-            #Get installed SQL Versions
-            $SQLVersion_regs = (get-itemproperty 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server').InstalledInstances
-            foreach ($SQLVersion_reg in $SQLVersion_regs){
-               $SQLVersion_ = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL').$SQLVersion_reg
-               $SQLVersion_main = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\$SQLVersion_\Setup").Edition
-               $SQLVersion_sub = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\$SQLVersion_\Setup").Version
-            }
-        } else {
-            $sqlServerInstalled_String = "SQL Server is not installed on this machine"
-        }
- ```
-
-
 
 
 
