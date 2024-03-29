@@ -9,18 +9,23 @@
 ##### Chapter 1 - Powershell simple
 
    ```powershell
+
+   # Get-Command Example
    Get-Command                                          #like help in cmd 
    Get-Command | Sort-Object comand-type                #sorted output
    Get-Command -Module hyper-v | Out-GridView           #show all hyper-v cmdlets
 
+   #Get-Member Example
    Get-ChildItem | Get-Member                           #Eigenschaften this gets you everything
    Get-ChildItem | Get-Member -MemberType Property      #Eigenschaften
 
+   #get-help Example
    get-help Get-Process -Examples                       #Hilfe von einem Befehl
    get-help Get-Process -Online                         #Hilfe online
    get-help *-item                                      #Hilfe über alle Befehle mit *-item
    update-help                                          #Hilfe aktuallisieren
 
+   #get-alias Example
    get-alias –Definition Get-ChildItem                  #definition parameter to get all aliases for a cmdlet
    get-alias -name ls                                   #what command an alias is running
    get-alias -name %
