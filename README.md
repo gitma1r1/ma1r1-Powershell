@@ -184,24 +184,22 @@ $PowershellVersion = ($PSVersionTable).PSVersion | Select-Object major -ExpandPr
 Write-Host "Powershell Version: $PowershellVersion" 
 ```
 
-##### Exchange all Adress + Alias)
+#####Exchange 
    ```powershell
-Get-Mailbox -ResultSize Unlimited -OrganizationalUnit "OU=211759,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" | Select DisplayName,PrimarySmtpAddress, @{Name="EmailAddresses";Expression={($_.EmailAddresses | Where-Object {$_ -clike "smtp*"} | ForEach-Object {$_ -replace "smtp:",""}) -join ","}} | Sort-Object DisplayName | export-csv '\\ASP-Admin\D$\UserPST\Temp\testsss.csv' -Delimiter ";" -NoType -Encoding UTF8  
-
-```
-
-#Exchange 
 Add-PSSnapin Microsoft.Exchange.Management.PowerShell.SnapIn #Snapin Exchange
 
 #get Aliasadresse
 get-mailbox -OrganizationalUnit "OU=206090,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" | select Name,SamAccountName -ExpandProperty EmailAddresses | select Name,SamAccountName,SMTPAddress | sort samaccountname | export-scv d:\temp\adresses.csv
+
+#get Exchange all Adress + Alias
+Get-Mailbox -ResultSize Unlimited -OrganizationalUnit "OU=211759,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" | Select DisplayName,PrimarySmtpAddress, @{Name="EmailAddresses";Expression={($_.EmailAddresses | Where-Object {$_ -clike "smtp*"} | ForEach-Object {$_ -replace "smtp:",""}) -join ","}} | Sort-Object DisplayName | export-csv '\\ASP-Admin\D$\UserPST\Temp\testsss.csv' -Delimiter ";" -NoType -Encoding UTF8  
 
 #Mailboxen mit Weiterleitung (Forward)
 Get-Mailbox -OrganizationalUnit "OU=206090,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" | Where {$_.ForwardingAddress -ne $null} | Select Name, Alias, ForwardingAddress, DeliverToMailboxAndForward
 
 #Mailboxsize
 Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" -ResultSize Unlimited | Get-MailboxStatistics | Sort-Object TotalItemSize -Descending | Select-Object DisplayName,Alias,TotalItem
-
+```
 
 ##### Speicherplatz C:\Windows
    ```powershell
