@@ -191,6 +191,30 @@ if ("$input8" -match $IPv4Regex){
 [System.Windows.Forms.MessageBox]::Show("wronge IP syntax...")
 }
  ```
+
+   ##### Skript Break - WaitForTextFile Function
+   ```powershell
+
+function WaitForTextFile {
+    param([string]$PathToFile)
+
+    # Überprüfen, ob die Datei vorhanden ist
+    while (-not (Test-Path $PathToFile)) {
+        Write-Host "Warte auf Datei: $PathToFile" -ForegroundColor Yellow
+        Start-Sleep -Milliseconds 1000
+    }
+
+    $currentTime = Get-Date
+    Write-Host "Datei gefunden: $PathToFile" -ForegroundColor Green
+    Write-Host "Datum und Uhrzeit: $currentTime" -ForegroundColor Green
+}
+
+# Beispielaufruf der Funktion
+WaitForTextFile -PathToFile "D:\tmp\test.txt"
+
+ ```
+
+
  
  
 
