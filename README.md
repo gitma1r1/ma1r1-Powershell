@@ -193,17 +193,6 @@ if ("$input8" -match $IPv4Regex){
  ```
  
  
-  ##### Get the antivirus product 
-   ```powershell
-$Virenscanners = Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct
-            foreach($Virenscanner in $Virenscanners){
-                $antivirusProduct += $Virenscanner.displayName
-
-$wmiQuery_avp = "SELECT * FROM AntiVirusProduct" 
-$AntivirusProduct_ = Get-WmiObject -Namespace "root\SecurityCenter2" -Query $wmiQuery_avp  @psboundparameters -ErrorVariable myError -ErrorAction 'SilentlyContinue'   $antivirusProduct = $AntivirusProduct_.displayName
-
-(Get-MpComputerStatus).AntivirusProduct
- ```
  
  ##### Check if SQL Server is installed
    ```powershell
