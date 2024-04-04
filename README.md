@@ -8,73 +8,102 @@
 
    ```powershell
 
-   # Get-Command Example
-   Get-Command                                          #like help in cmd
-   Get-Command -Module Microsoft*                       # Retrieves a list of all the modules named Microsoft*
-   Get-Command -Name *item                              # Retrieves a list of all commands ending in "item"
-   Get-Command | Sort-Object comand-type                #sorted output
-   Get-Command -Module hyper-v | Out-GridView           #show all hyper-v cmdlets
-   Get-Command -All                                     all commands
+###################################################
+# Get-Command
+###################################################
 
-   #Get-Member Example
-   Get-ChildItem | Get-Member                           #Eigenschaften this gets you everything
-   Get-ChildItem | Get-Member -MemberType Property      #Eigenschaften
+   Get-Command                                     # like help in cmd
+   Get-Command -Module Microsoft*                  # Retrieves a list of all the modules named Microsoft*
+   Get-Command -Name *item                         # Retrieves a list of all commands ending in "item"
+   Get-Command | Sort-Object comand-type           # sorted output
+   Get-Command -Module hyper-v | Out-GridView      # show all hyper-v cmdlets
+   Get-Command -All                                # all commands
 
-   #CMD command in powershell
-   cmd.exe /c dir                                       #cmd-Aufruf via Powershell
+   Get-ChildItem | Get-Member                      # Eigenschaften this gets you everything
+   Get-ChildItem | Get-Member -MemberType Property # Eigenschaften
 
-   #Get-Host
-   Get-Host                                             #get the Host details
+   Get-Host                                        # get the Host details
 
-   #Bildschirm "leeren"
-   Clear-Host                                           # same as cls in CMD; clears the screen
-   cls
+   Get-Verb                                        #get the list of approved verbs
 
-   #$env
-   $env:COMPUTERNAME                                    # Computername
-   $env:USERNAME                                        # USERNAME
-   $env:USERDNSDOMAIN                                   # USERDNSDOMAIN
-#NOTE: If you dont know all the variables part of it, after : type tab key to all those variables one-by-one.
+   Get-History                                     #Get-History Powershell commands
 
-   #get-help Example
-   Get-Help                                             # Get all help topics
-   Get-help Get-Process -Examples                       #Hilfe von einem Befehl
-   Get-help Get-Process -Online                         #Hilfe online
-   Get-help *-item                                      #Hilfe über alle Befehle mit *-item
-   Update-help                                          #Hilfe aktuallisieren
-   Get-Help -Name about_Variables                       # a specific about_* topic (aka. man page)
-   Get-Help -Name Get-Command                           # a specific PowerShell function
-   Get-Help -Name Get-Command -Parameter Module         # a specific parameter on a specific command
-
-   #get-alias Example
-   get-alias –Definition Get-ChildItem                  #definition parameter to get all aliases for a cmdlet
-   get-alias -name ls                                   #what command an alias is running
+   get-alias –Definition Get-ChildItem             # definition parameter to get all aliases for a cmdlet
+   get-alias -name ls                              # what command an alias is running
    get-alias -name %
 
-   #a list of verbs
-   Get-Verb                                             #get the list of approved verbs
+   Get-Help                                        # Get all help topics
+   Get-help Get-Process -Examples                  # Hilfe von einem Befehl
+   Get-help Get-Process -Online                    # Hilfe online
+   Get-help *-item                                 # Hilfe über alle Befehle mit *-item
+   Update-help                                     # Hilfe aktuallisieren
+   Get-Help -Name about_Variables                  # a specific about_* topic (aka. man page)
+   Get-Help -Name Get-Command                      # a specific PowerShell function
+   Get-Help -Name Get-Command -Parameter Module    # a specific parameter on a specific command
 
-   #Get-History
-   Get-History                                       #Get-History Powershell commands
+   #Bildschirm "leeren"
+   Clear-Host                                      # same as cls in CMD; clears the screen
+   cls
 
-   #Read-Host Example
-   $adresse = Read-Host "Mail Adresse Eingeben: " #Read Host - List Eingabe in Variabe ein
+   #CMD command in powershell
+   cmd.exe /c dir                                  # cmd-Aufruf via Powershell
 
-   # Write-Host Example
-   Write-Host "Red " -ForegroundColor red -nonewline; Write-Host "black " -ForegroundColor black -nonewline;      Write-Host "Blue " -ForegroundColor blue; #ForegroundColor
+   #$env
+   $env:COMPUTERNAME                # Computername
+   $env:USERNAME                    # USERNAME
+   $env:USERDNSDOMAIN               # USERDNSDOMAIN
+#NOTE: If you dont know all the variables part of it, after : type tab key to all those variables one-by-one.
+
+
+###################################################
+# Read-Host Example
+###################################################
+
+$adresse = Read-Host "Mail Adresse Eingeben: " #Read Host - List Eingabe in Variabe ein
+
+
+###################################################
+# Write-Host Example
+###################################################
+
+Write-Host "Red " -ForegroundColor red -nonewline; Write-Host "black " -ForegroundColor black -nonewline;
+Write-Host "Blue " -ForegroundColor blue; #ForegroundColor
+
+
+###################################################
+# Variables
+###################################################
+
+$a = 0                                                    # Initialize a variable
+[int] $a = 'Trevor'                                       # Initialize a variable, with the specified type (throws an exception)
+[string] $a = 'Trevor'                                    # Initialize a variable, with the specified type (doesn't throw an exception)
+
+Get-Command -Name *varia*                                 # Get a list of commands related to variable management
+
+Get-Variable                                              # Get an array of objects, representing the variables in the current and parent scopes 
+Get-Variable | ? { $PSItem.Options -contains 'constant' } # Get variables with the "Constant" option set
+Get-Variable | ? { $PSItem.Options -contains 'readonly' } # Get variables with the "ReadOnly" option set
+
+New-Variable -Name FirstName -Value Trevor
+New-Variable FirstName -Value Trevor -Option Constant     # Create a constant variable, that can only be removed by restarting PowerShell
+New-Variable FirstName -Value Trevor -Option ReadOnly     # Create a variable that can only be removed by specifying the -Force parameter on Remove-Variable
+
+Remove-Variable -Name firstname                           # Remove a variable, with the specified name
+Remove-Variable -Name firstname -Force                    # Remove a variable, with the specified name, that has the "ReadOnly" option set
+
 
 ###################################################
 # Operators
 ###################################################
 
-   $a = 2                                              # Basic variable assignment operator
-   $a += 1                                             # Incremental assignment operator
-   $a -= 1                                             # Decrement assignment operator
+   $a = 2                                # Basic variable assignment operator
+   $a += 1                               # Incremental assignment operator
+   $a -= 1                               # Decrement assignment operator
 
-   $a -eq 0                                            # Equality comparison operator
-   $a -ne 5                                            # Not-equal comparison operator
-   $a -gt 2                                            # Greater than comparison operator
-   $a -lt 3                                            # Less than comparison operator
+   $a -eq 0                              # Equality comparison operator
+   $a -ne 5                              # Not-equal comparison operator
+   $a -gt 2                              # Greater than comparison operator
+   $a -lt 3                              # Less than comparison operator
 
    $FirstName = 'Trevor'
    $FirstName -like 'T*'                               # Perform string comparison using the -like operator, which supports the wildcard (*) character. Returns $true
@@ -95,6 +124,7 @@
    $false -is [bool]                                         # Is $false a boolean value? Yes. Returns $true.
    5 -is [bool]                                              # Is the number 5 a boolean value? No. Returns $false.
 
+
 ###################################################
 # Regular Expressions
 ###################################################
@@ -106,6 +136,7 @@ $matches[0]                                               # Returns 'Trevor', ba
 
 $regex = [regex]'(\w{3,8})'
 $regex.Matches('Trevor Bobby Dillon Joe Jacob').Value     # Find multiple matches against a singleton string value.
+
 
 ###################################################
 # Flow Control
@@ -131,27 +162,6 @@ switch -regex (@('Trevor', 'Daniel', 'Bobby')) {          # Switch statement omi
   'r' { $PSItem }
 }
 
-###################################################
-# Variables
-###################################################
-
-
-$a = 0                                                    # Initialize a variable
-[int] $a = 'Trevor'                                       # Initialize a variable, with the specified type (throws an exception)
-[string] $a = 'Trevor'                                    # Initialize a variable, with the specified type (doesn't throw an exception)
-
-Get-Command -Name *varia*                                 # Get a list of commands related to variable management
-
-Get-Variable                                              # Get an array of objects, representing the variables in the current and parent scopes 
-Get-Variable | ? { $PSItem.Options -contains 'constant' } # Get variables with the "Constant" option set
-Get-Variable | ? { $PSItem.Options -contains 'readonly' } # Get variables with the "ReadOnly" option set
-
-New-Variable -Name FirstName -Value Trevor
-New-Variable FirstName -Value Trevor -Option Constant     # Create a constant variable, that can only be removed by restarting PowerShell
-New-Variable FirstName -Value Trevor -Option ReadOnly     # Create a variable that can only be removed by specifying the -Force parameter on Remove-Variable
-
-Remove-Variable -Name firstname                           # Remove a variable, with the specified name
-Remove-Variable -Name firstname -Force                    # Remove a variable, with the specified name, that has the "ReadOnly" option set
 
 ###################################################
 # Functions
@@ -167,6 +177,7 @@ function Do-Something {                                   # A PowerShell Advance
   end { }
 }
 
+
 ###################################################
 # Working with Modules
 ###################################################
@@ -181,28 +192,45 @@ $PSModuleAutoLoadingPreference = 0                          # Disable auto-loadi
 Import-Module -Name NameIT                                  # Explicitly import a module, from the specified filesystem path or name (must be present in $env:PSModulePath)
 Remove-Module -Name NameIT                                  # Remove a module from the scope of the current PowerShell session
 
-   #Install a Module example
-   Install-Module -Name "ISESteroids" -Scope CurrentUser -Repository PSGallery -Force   #Install Module: ISESterioids
-   Start-Steroids
+#Install a Module example
+Install-Module -Name "ISESteroids" -Scope CurrentUser -Repository PSGallery -Force   #Install Module: ISESterioids
+Start-Steroids
 
-   #Import a Module example 
-   Import-Module NTFSSecurity 
-   add-ntfsaccess -path D:\temp\ -Account domain\Domänen-Benutzer -AccessRights ReadandExecute #ReadandExecute , Modify
+#Import a Module example 
+Import-Module NTFSSecurity 
+add-ntfsaccess -path D:\temp\ -Account domain\Domänen-Benutzer -AccessRights ReadandExecute #ReadandExecute , Modify
 
-   #Dienst Beschreibung hinzufügen
+
+###################################################
+# Dienst Beschreibung hinzufügen
+###################################################
+
    Set-Service -name BMDNTCSSOAPService221255 -Description "BMDNTCSSoapservice für 221255- läuft auf TCP Port 12640" #Dienst Beschreibung hinzfügen
 
-   #Regedit File umbenennen
+
+###################################################
+# regedit File umbenennen
+###################################################
+
    rename-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager' -Name "PendingFileRenameOperations" -NewName "_PendingFileRenameOperations" #PendingFileRenameOperations
 
-   #/Process killen beenden
+
+###################################################
+# /Process killen beenden
+###################################################
+
    Taskkill /T /F /IM bmd*                               #beendet alle Prozesse mit bmd beginnend     
    Taskkill /T /F /IM bmd.exe /bmd2.exe                  #beendet 2 bestimmte Prozesse
    pskill -accepteula bmdntcs.exe                        #beendet bestimmten Prozesse
 
-   #Powerhsell Version auslesen
+
+###################################################
+# Powerhsell Version auslesen
+###################################################
+
    $PowershellVersion = ($PSVersionTable).PSVersion | Select-Object major -ExpandProperty major #Powershell Version
    Write-Host "Powershell Version: $PowershellVersion" 
+
 
 ###################################################
 # PowerShell Drives (PSDrives)
@@ -216,57 +244,32 @@ Remove-PSDrive -Name xyz                                    # Delete a PSDrive
 
 ```
 
+
 ##### Chapter 2 - Powershell - Network
    ```powershell
 
-   #Network Ping
+###################################################
+#Network
+###################################################
 
-   #ping in powershell
-   ping www.googel.at -force                                                                #ping in powershell
+   ping www.googel.at -force                                  #ping in powershell
+   while($true){Test-Connection 8.8.8.8}                      #permanent ping
+   (Test-NetConnection localhost).PingSucceeded               #Ping with Boolean return
+   ipconfig /displaydns                                       #shows the dns
+   (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content   #show public ip
+   1..254 | ForEach-Object {Test-Connection -ComputerName "192.168.0.$_" -Count 1 -ErrorAction SilentlyContinue}  #IP Spoofing 1-254
 
-   #permanent ping
-   while($true){Test-Connection 8.8.8.8}                                                    #permanent ping
-
-   #Ping with Boolean return
-   Test-NetConnection bmdntcstest2041                                                       #Ping with Boolean return
-   1..254 | ForEach-Object 
-
-   #IP Spoofing 1-254
-   {Test-Connection -ComputerName "192.168.0.$_" -Count 1 -ErrorAction SilentlyContinue}    #IP Spoofing 1-254
-
-   #shows the dns
-   ipconfig /displaydns                                                                     #shows the dns
-
-   #show public ip
-   (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content                                 #show public ip
- 
-   #Network Port
-
-   #Test Port
-   Test-NetConnection -computer Computername -Port 89                  #Test Port
-
-   #Telnet via dism installieren
-   dism /online /Enable-Feature /FeatureName:TelnetClient              #Telnet installieren
-
-   #alternative zu telnet
-   New-Object System.Net.Sockets.TcpClient("192.168.0.24", 3389)       #alternative zu Telnet
-
-   #Port finden locoal
-   netstat -an |find /i "82"                                           #Port finden
-
-   #telnet via powershell
-   cmd telnet 192.168.0.24 3389                                        #Telnet verbindung
+   Test-NetConnection -computer Computername -Port 89               #Test Port
+   dism /online /Enable-Feature /FeatureName:TelnetClient           #Telnet installieren
+   New-Object System.Net.Sockets.TcpClient("192.168.0.24", 3389)    #alternative zu Telnet
+   netstat -an |find /i "82"                                        #Port finden
+   cmd telnet 192.168.0.24 3389                                     #Telnet verbindung
 
    #Port scan (slow version)
    foreach ($port in 1..104) {If (($a=Test-NetConnection srvfs01 -Port $port -WarningAction SilentlyContinue).tcpTestSucceeded -eq $true){ "TCP port $port is open!"}}
 
-   # Network stuff
-
-   #Wlan SSID und Kennwort auslesen
-   netsh.exe wlan show profiles name=’A1-morty-5G’ key=clear           #Wlan SSID und Kennwort auslesen
-
-   #Wlan SSID auslesen
-   netsh wlan show networks                                            #Wlan SSID auslesen
+   netsh.exe wlan show profiles name=’A1-morty-5G’ key=clear       #Wlan SSID und Kennwort auslesen
+   netsh wlan show networks                                        #Wlan SSID auslesen
 
  ```
  
@@ -312,7 +315,7 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
    DISM.exe /Online /Cleanup-Image /StartComponentCleanup /ResetBase 
 
    #Papierkorb leeren
-   Clear-RecycleBin -Force                                            #Papierkorb leeren
+   Clear-RecycleBin -Force                         #Papierkorb leeren
 
    #Netlaufwerk Force entfernen
    Remove-SmbMapping -RemotePath \\server\share -LocalPath Z: -Force  #remove SMBShare
@@ -327,7 +330,7 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
    (Get-WmiObject -Class Win32_PhysicalMemory | Select-Object -expandProperty Capacity)/1GB        #Ram Auslesen und auf GB umrechnen
 
    #Icons aus dll exportieren
-   Export-Icon C:\windows\system32\imageres.dll                                                   #export ico example:shell32.dll #dsuiext.dll
+   Export-Icon C:\windows\system32\imageres.dll             #export ico example:shell32.dll #dsuiext.dll
 
 Get-CimInstance -ClassName Win32_BIOS                       # Retrieve BIOS information
 Get-CimInstance -ClassName Win32_DiskDrive                  # Retrieve information about locally connected physical disk devices
