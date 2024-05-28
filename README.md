@@ -4,7 +4,7 @@
 
 ## Windows PowerShell-Cheatsheet
 
-##### Chapter 1 - Powershell general
+#### Chapter 1 - Powershell general
 
    ```powershell
 
