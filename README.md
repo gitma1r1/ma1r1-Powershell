@@ -4,7 +4,7 @@
 
 ## Windows PowerShell-Cheatsheet
 
-#### Chapter 1 - Powershell general
+### Chapter 1 - Powershell general
 
    ```powershell
 
@@ -245,7 +245,7 @@ Remove-PSDrive -Name xyz                                    # Delete a PSDrive
 ```
 
 
-##### Chapter 2 - Powershell - Network
+### Chapter 2 - Powershell - Network
    ```powershell
 
 ###################################################
@@ -274,7 +274,7 @@ Remove-PSDrive -Name xyz                                    # Delete a PSDrive
  ```
  
  
-   ##### Chapter 3 - SQL Befehle
+   ### Chapter 3 - SQL Befehle
    ```powershell
 
    #SQL Script starten via sqlcmd
@@ -283,7 +283,7 @@ Remove-PSDrive -Name xyz                                    # Delete a PSDrive
 
  ```
 
-##### Chapter 4 - Exchange 
+### Chapter 4 - Exchange 
    ```powershell
 
 #Import Exchange Module (Snapin)
@@ -303,7 +303,7 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
 ```
 
  
-  ##### Chapter 5 - Windows Stuff
+  ### Chapter 5 - Windows Stuff
    ```powershell
 
    #Energieeinstellungen
@@ -348,7 +348,7 @@ Get-CimInstance -Namespace root -ClassName __NAMESPACE      # Explore the child 
 
  ```
 
-   ##### Chapter 6 - Examples
+   ### Chapter 6 - Examples
  
    ##### Check if the correct IP Syntax is returned
    ```powershell
