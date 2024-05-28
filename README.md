@@ -252,11 +252,11 @@ Remove-PSDrive -Name xyz                                    # Delete a PSDrive
 #Network
 ###################################################
 
-   ping www.googel.at -force                                  #ping in powershell
-   while($true){Test-Connection 8.8.8.8}                      #permanent ping
-   (Test-NetConnection localhost).PingSucceeded               #Ping with Boolean return
-   ipconfig /displaydns                                       #shows the dns
-   (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content   #show public ip
+   ping www.googel.at -force                                                 #ping in powershell
+   while($true){Test-Connection 8.8.8.8}                                     #permanent ping
+   (Test-NetConnection localhost).PingSucceeded                              #Ping with Boolean return
+   ipconfig /displaydns                                                      #shows the dns
+   (Invoke-WebRequest -uri "http://ifconfig.me/ip" -UseBasicParsing).Content #show public ip
    1..254 | ForEach-Object {Test-Connection -ComputerName "192.168.0.$_" -Count 1 -ErrorAction SilentlyContinue}  #IP Spoofing 1-254
 
    Test-NetConnection -computer Computername -Port 89               #Test Port
