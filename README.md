@@ -332,32 +332,56 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
    #Icons aus dll exportieren
    Export-Icon C:\windows\system32\imageres.dll             #export ico example:shell32.dll #dsuiext.dll
 
-Get-CimInstance -ClassName Win32_BIOS                       # Retrieve BIOS information
-Get-CimInstance -ClassName Win32_DiskDrive                  # Retrieve information about locally connected physical disk devices
-Get-CimInstance -ClassName Win32_PhysicalMemory             # Retrieve information about install physical memory (RAM)
-Get-CimInstance -ClassName Win32_NetworkAdapter             # Retrieve information about installed network adapters (physical + virtual)
-Get-CimInstance -ClassName Win32_VideoController            # Retrieve information about installed graphics / video card (GPU)
+   Get-CimInstance -ClassName Win32_BIOS                       # Retrieve BIOS information
+   Get-CimInstance -ClassName Win32_DiskDrive                  # Retrieve information about locally connected physical disk devices
+   Get-CimInstance -ClassName Win32_PhysicalMemory             # Retrieve information about install physical memory (RAM)
+   Get-CimInstance -ClassName Win32_NetworkAdapter             # Retrieve information about installed network adapters (physical + virtual)
+   Get-CimInstance -ClassName Win32_VideoController            # Retrieve information about installed graphics / video card (GPU)
 
-Get-CimClass -Namespace root\cimv2                          # Explore the various WMI classes available in the root\cimv2 namespace
-Get-CimInstance -Namespace root -ClassName __NAMESPACE      # Explore the child WMI namespaces underneath the root\cimv2 namespace
-   
+   Get-CimClass -Namespace root\cimv2                          # Explore the various WMI classes available in the root\cimv2 namespace
+   Get-CimInstance -Namespace root -ClassName __NAMESPACE      # Explore the child WMI namespaces underneath the root\cimv2 namespace
+      
    #Install Google Chrome
    $LocalTempDir = $env:TEMP; $ChromeInstaller = "ChromeInstaller.exe"; (new-object    System.Net.WebClient).DownloadFile('http://dl.google.com/chrome/install/375.126/chrome_installer.exe', "$LocalTempDir\$ChromeInstaller"); &          "$LocalTempDir\$ChromeInstaller" /silent /install; $Process2Monitor =  "ChromeInstaller"; Do { $ProcessesFound = Get-Process | ?{$Process2Monitor -contains $_.Name} | Select-Object -ExpandProperty Name; If ($ProcessesFound) { "Still running:    $($ProcessesFound -join ', ')" | Write-Host; Start-Sleep -Seconds 2 } else { rm "$LocalTempDir\$ChromeInstaller" -ErrorAction SilentlyContinue -Verbose } } Until (!$ProcessesFound) #Install Google Chrome
-
-
-#Thumbnail setzen (AD User)
-$user = "its999-dummy"
-$photo = [byte[]](Get-Content "D:\temp\mai156\test.png" -Encoding byte)
-Set-ADUser $user -Replace @{thumbnailPhoto=$photo}
-
-
-#Set SSL FLags for SSL Client
-Set-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
+   
+   
+   #Set SSL FLags for SSL Client
+   Set-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
+   Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
 
  ```
+   ### Chapter 6 - AD - Active Directory
+```powershell
 
-   ### Chapter 6 - Examples
+   #SID auslesen: Variante 1
+   
+   #function Get-SID-From-User
+   function Get-SID-From-User {
+       param (
+           [string]$User
+       )
+   
+       $User_tmp = Get-ADUser $User
+       $SID_Value = $User_tmp.SID.Value
+       Write-Host "SID von $User : $SID_Value" -ForegroundColor Cyan
+   }
+   #Beispiel:
+   Get-SID-From-User -User "tul046"
+   
+   #####################################################################################
+   #SID auslesen: Variante 2
+   (New-Object System.Security.Principal.NTAccount('233711_001')).Translate([System.Security.Principal.SecurityIdentifier]).Value #get SID 
+   
+   
+   #Thumbnail setzen (AD User)
+      $user = "its999-dummy"
+      $photo = [byte[]](Get-Content "D:\temp\mai156\test.png" -Encoding byte)
+      Set-ADUser $user -Replace @{thumbnailPhoto=$photo}
+
+
+  ```
+
+   ### Chapter 7 - Examples
  
    ##### Check if the correct IP Syntax is returned
    ```powershell
