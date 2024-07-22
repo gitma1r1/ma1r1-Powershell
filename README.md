@@ -345,6 +345,9 @@ Get-CimInstance -Namespace root -ClassName __NAMESPACE      # Explore the child 
    $LocalTempDir = $env:TEMP; $ChromeInstaller = "ChromeInstaller.exe"; (new-object    System.Net.WebClient).DownloadFile('http://dl.google.com/chrome/install/375.126/chrome_installer.exe', "$LocalTempDir\$ChromeInstaller"); &          "$LocalTempDir\$ChromeInstaller" /silent /install; $Process2Monitor =  "ChromeInstaller"; Do { $ProcessesFound = Get-Process | ?{$Process2Monitor -contains $_.Name} | Select-Object -ExpandProperty Name; If ($ProcessesFound) { "Still running:    $($ProcessesFound -join ', ')" | Write-Host; Start-Sleep -Seconds 2 } else { rm "$LocalTempDir\$ChromeInstaller" -ErrorAction SilentlyContinue -Verbose } } Until (!$ProcessesFound) #Install Google Chrome
 
 
+#Set SSL FLags for SSL Client
+Set-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
 
  ```
 
