@@ -257,7 +257,28 @@ Remove-PSDrive -Name xyz                                    # Delete a PSDrive
    (Test-NetConnection localhost).PingSucceeded                              #Ping with Boolean return
    ipconfig /displaydns                                                      #shows the dns
    (Invoke-WebRequest -uri "http://ifconfig.me/ip" -UseBasicParsing).Content #show public ip
-   1..254 | ForEach-Object {Test-Connection -ComputerName "192.168.0.$_" -Count 1 -ErrorAction SilentlyContinue}  #IP Spoofing 1-254
+   1..254 | ForEach-Object {Test-Connection -ComputerName "192.168.0.$_" -Count 1 -ErrorAction SilentlyContinue}  #IP Spoofing 1-254 v1
+
+   #ip Spoofing v2
+   function Test-IPRange {
+       param (
+           [string]$Subnet = "10.22.40",
+           [int]$StartRange = 1,
+           [int]$EndRange = 254
+       )
+   
+       $StartRange..$EndRange | ForEach-Object {
+           $ip = "$Subnet.$_"
+           if (Test-Connection -ComputerName $ip -Count 1 -Quiet) {
+               Write-Host "$ip is active" -ForegroundColor Green
+           } else {
+               Write-Host "$ip is inactive" -ForegroundColor Red
+           }
+       }
+   }
+   # Beispielaufruf:
+   Test-IPRange -Subnet "192.168.1" -StartRange 1 -EndRange 254
+
 
    Test-NetConnection -computer Computername -Port 89               #Test Port
    dism /online /Enable-Feature /FeatureName:TelnetClient           #Telnet installieren
