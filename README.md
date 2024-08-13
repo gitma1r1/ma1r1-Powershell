@@ -356,8 +356,9 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
 
  ```
 
-   ###Chapter 6 - Examples
-     ##### Function - SID auslesen: Variante 1
+ ###Chapter 6 - Examples
+ 
+   ##### Function - SID auslesen: Variante 1
    ```powershell
 
    #SID auslesen
