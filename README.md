@@ -343,6 +343,9 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
 
    Get-CimClass -Namespace root\cimv2                          # Explore the various WMI classes available in the root\cimv2 namespace
    Get-CimInstance -Namespace root -ClassName __NAMESPACE      # Explore the child WMI namespaces underneath the root\cimv2 namespace
+
+   #SID auslesen: Variante 2
+   (New-Object System.Security.Principal.NTAccount('233711_001')).Translate([System.Security.Principal.SecurityIdentifier]).Value #get SID 
       
    #Install Google Chrome
    $LocalTempDir = $env:TEMP; $ChromeInstaller = "ChromeInstaller.exe"; (new-object    System.Net.WebClient).DownloadFile('http://dl.google.com/chrome/install/375.126/chrome_installer.exe', "$LocalTempDir\$ChromeInstaller"); &          "$LocalTempDir\$ChromeInstaller" /silent /install; $Process2Monitor =  "ChromeInstaller"; Do { $ProcessesFound = Get-Process | ?{$Process2Monitor -contains $_.Name} | Select-Object -ExpandProperty Name; If ($ProcessesFound) { "Still running:    $($ProcessesFound -join ', ')" | Write-Host; Start-Sleep -Seconds 2 } else { rm "$LocalTempDir\$ChromeInstaller" -ErrorAction SilentlyContinue -Verbose } } Until (!$ProcessesFound) #Install Google Chrome
@@ -352,12 +355,13 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
 
  ```
-   ### Chapter 6 - AD - Active Directory
-```powershell
 
-   #SID auslesen: Variante 1
-   
-   #function Get-SID-From-User
+   ### Chapter 6 - Examples
+
+     ##### Function SID auslesen: Variante 1
+   ```powershell
+
+   #SID auslesen
    function Get-SID-From-User {
        param (
            [string]$User
@@ -367,23 +371,23 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
        $SID_Value = $User_tmp.SID.Value
        Write-Host "SID von $User : $SID_Value" -ForegroundColor Cyan
    }
+
    #Beispiel:
    Get-SID-From-User -User "tul046"
-   
-   #####################################################################################
-   #SID auslesen: Variante 2
-   (New-Object System.Security.Principal.NTAccount('233711_001')).Translate([System.Security.Principal.SecurityIdentifier]).Value #get SID 
-   
-   
+
+   ```
+
+
+     ##### Thumbnail setzen (AD User)
+   ```powershell
+
    #Thumbnail setzen (AD User)
       $user = "its999-dummy"
       $photo = [byte[]](Get-Content "D:\temp\mai156\test.png" -Encoding byte)
       Set-ADUser $user -Replace @{thumbnailPhoto=$photo}
 
+   ```
 
-  ```
-
-   ### Chapter 7 - Examples
  
    ##### Check if the correct IP Syntax is returned
    ```powershell
