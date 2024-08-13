@@ -466,6 +466,78 @@ WaitForTextFile -PathToFile "D:\tmp\test.txt"
 
  ```
 
+   ##### Function - kill all Tasks 
+   ```powershell
 
+function kill-all-Tasks {
 
+$password = Get-Content C:\Users\mai156-admin\Desktop\bin\cred_mai156-admin-asp01dom.txt | ConvertTo-SecureString
+$User = "ASP01DOM\mai156-admin"
+$Credential = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList $User, $password
+
+$TaskServers = @(
+    "aspch-task-l.Asp01dom.local",
+    "aspch-task-s.Asp01dom.local",
+    "ASP-TASK-S.Asp01dom.local",
+    "ASP-TASK-L.Asp01dom.local",
+    "ASPDE-TASK-S.Asp01dom.local",
+    "ASPDE-TASK-L.Asp01dom.local",
+    "ASP-TASK-S-01.Asp01dom.local",
+    "ASP-TASK-S-02.Asp01dom.local",
+    "ASP-TASK-L-01.Asp01dom.local",
+    "ASP-TASK-L-02.Asp01dom.local"
+)
+
+foreach ($TaskServer in $TaskServers) {
+    $result = Invoke-Command -ComputerName $TaskServer -Authentication Credssp -Credential $Credential -ScriptBlock {
+        # Prozessnamen mit Dateiendung
+        $prozessName = "BMDNTCS.exe"
+        # Maximale CPU-Laufzeit in Minuten
+        $maxCpuLaufzeit = 120
+        # Prozesse suchen
+        $prozesse = Get-WmiObject Win32_Process | Where-Object { $_.Name -eq $prozessName }
+
+        foreach ($prozess in $prozesse) {
+            # CPU-Laufzeit überprüfen
+            $cpuLaufzeit = (Get-Date) - [Management.ManagementDateTimeConverter]::ToDateTime($prozess.CreationDate)
+
+            if ($cpuLaufzeit.TotalMinutes -ge $maxCpuLaufzeit) {
+                [PSCustomObject]@{
+                    ServerName = $env:COMPUTERNAME
+                    ProzessName = $prozessName
+                    ProcessID = $prozess.ProcessId
+                    CPUUsageMinutes = $cpuLaufzeit.TotalMinutes
+                    Status = "Beendet"
+                }
+                Stop-Process -Id $prozess.ProcessId -Force
+            } else {
+                [PSCustomObject]@{
+                    ServerName = $env:COMPUTERNAME
+                    ProzessName = $prozessName
+                    ProcessID = $prozess.ProcessId
+                    CPUUsageMinutes = $cpuLaufzeit.TotalMinutes
+                    Status = "Noch nicht beendet"
+                }
+            }
+        }
+
+        if ($prozesse.Count -eq 0) {
+            [PSCustomObject]@{
+                ServerName = $env:COMPUTERNAME
+                ProzessName = $prozessName
+                ProcessID = $null
+                CPUUsageMinutes = $null
+                Status = "Kein Prozess gefunden"
+            }
+        }
+    }
+
+    # Ausgabe der Ergebnisse auf der lokalen Maschine
+    $result
+}
+} 
+# Beispielaufruf der Funktion
+kill-all-Tasks
+
+ ```
 
