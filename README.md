@@ -356,9 +356,8 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
 
  ```
 
-   ### Chapter 6 - Examples
-
-     ##### Function SID auslesen: Variante 1
+   ###Chapter 6 - Examples
+     ##### Function - SID auslesen: Variante 1
    ```powershell
 
    #SID auslesen
@@ -377,10 +376,8 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
 
    ```
 
-
-     ##### Thumbnail setzen (AD User)
+ ##### Function - Thumbnail setzen (AD User)
    ```powershell
-
    #Thumbnail setzen (AD User)
       $user = "its999-dummy"
       $photo = [byte[]](Get-Content "D:\temp\mai156\test.png" -Encoding byte)
@@ -389,7 +386,7 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
    ```
 
  
-   ##### Check if the correct IP Syntax is returned
+   ##### Function - Check if the correct IP Syntax is returned
    ```powershell
 
 #Check if the correct IP Syntax is returned
@@ -407,6 +404,7 @@ if ("$input8" -match $IPv4Regex){
 
    ##### Function Break - WaitForTextFile Function
    ```powershell
+
 #Function Break - WaitForTextFile Function
 function WaitForTextFile {
     param([string]$PathToFile)
