@@ -364,6 +364,17 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
       
    #Install Google Chrome
    $LocalTempDir = $env:TEMP; $ChromeInstaller = "ChromeInstaller.exe"; (new-object    System.Net.WebClient).DownloadFile('http://dl.google.com/chrome/install/375.126/chrome_installer.exe', "$LocalTempDir\$ChromeInstaller"); &          "$LocalTempDir\$ChromeInstaller" /silent /install; $Process2Monitor =  "ChromeInstaller"; Do { $ProcessesFound = Get-Process | ?{$Process2Monitor -contains $_.Name} | Select-Object -ExpandProperty Name; If ($ProcessesFound) { "Still running:    $($ProcessesFound -join ', ')" | Write-Host; Start-Sleep -Seconds 2 } else { rm "$LocalTempDir\$ChromeInstaller" -ErrorAction SilentlyContinue -Verbose } } Until (!$ProcessesFound) #Install Google Chrome
+
+
+   #extend FSLogix Disk with Diskpart
+   diskpart
+   sel vdisk file ="U:\UPD\256094_002_S-1-5-21-1644491937-813497703-725345543-59430\Profile_256094_002.VHDX"
+   expand vdisk maximum=102400
+   attach vdisk
+   sel par 1
+   extend
+   detach vdisk
+   exit
    
    
    #Set SSL FLags for SSL Client
