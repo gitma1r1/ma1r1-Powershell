@@ -259,25 +259,7 @@ Remove-PSDrive -Name xyz                                    # Delete a PSDrive
    (Invoke-WebRequest -uri "http://ifconfig.me/ip" -UseBasicParsing).Content #show public ip
    1..254 | ForEach-Object {Test-Connection -ComputerName "192.168.0.$_" -Count 1 -ErrorAction SilentlyContinue}  #IP Spoofing 1-254 v1
 
-   #ip Spoofing v2
-   function Test-IPRange {
-       param (
-           [string]$Subnet = "10.22.40",
-           [int]$StartRange = 1,
-           [int]$EndRange = 254
-       )
-   
-       $StartRange..$EndRange | ForEach-Object {
-           $ip = "$Subnet.$_"
-           if (Test-Connection -ComputerName $ip -Count 1 -Quiet) {
-               Write-Host "$ip is active" -ForegroundColor Green
-           } else {
-               Write-Host "$ip is inactive" -ForegroundColor Red
-           }
-       }
-   }
-   # Beispielaufruf:
-   Test-IPRange -Subnet "192.168.1" -StartRange 1 -EndRange 254
+
 
 
    Test-NetConnection -computer Computername -Port 89               #Test Port
@@ -364,18 +346,6 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
       
    #Install Google Chrome
    $LocalTempDir = $env:TEMP; $ChromeInstaller = "ChromeInstaller.exe"; (new-object    System.Net.WebClient).DownloadFile('http://dl.google.com/chrome/install/375.126/chrome_installer.exe', "$LocalTempDir\$ChromeInstaller"); &          "$LocalTempDir\$ChromeInstaller" /silent /install; $Process2Monitor =  "ChromeInstaller"; Do { $ProcessesFound = Get-Process | ?{$Process2Monitor -contains $_.Name} | Select-Object -ExpandProperty Name; If ($ProcessesFound) { "Still running:    $($ProcessesFound -join ', ')" | Write-Host; Start-Sleep -Seconds 2 } else { rm "$LocalTempDir\$ChromeInstaller" -ErrorAction SilentlyContinue -Verbose } } Until (!$ProcessesFound) #Install Google Chrome
-
-
-   #extend FSLogix Disk with Diskpart
-   diskpart
-   sel vdisk file ="U:\UPD\256094_002_S-1-5-21-1644491937-813497703-725345543-59430\Profile_256094_002.VHDX"
-   expand vdisk maximum=102400
-   attach vdisk
-   sel par 1
-   extend
-   detach vdisk
-   exit
-   
    
    #Set SSL FLags for SSL Client
    Set-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
@@ -417,21 +387,23 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
  
    ##### Check if the correct IP Syntax is returned
    ```powershell
+
 #Check if the correct IP Syntax is returned
 $input8 = "192.168.1.11"
 $Octet = '(?:0?0?[0-9]|0?[1-9][0-9]|1[0-9]{2}|2[0-5][0-5]|2[0-4][0-9])' #matches 0-255, and not higher than 255
 [regex] $IPv4Regex = "^(?:$Octet\.){3}$Octet$" #match an actual IP address instead of a number between 0 and 255 on its own
 '1.10.100.0' -match $IPv4Regex #Check
 if ("$input8" -match $IPv4Regex){
-[System.Windows.Forms.MessageBox]::Show("Correct IP syntax...")
+   [System.Windows.Forms.MessageBox]::Show("Correct IP syntax...")
 }else{
-[System.Windows.Forms.MessageBox]::Show("wronge IP syntax...")
+   [System.Windows.Forms.MessageBox]::Show("wronge IP syntax...")
 }
+
  ```
 
-   ##### Skript Break - WaitForTextFile Function
+   ##### Function Break - WaitForTextFile Function
    ```powershell
-#Skript Break - WaitForTextFile Function
+#Function Break - WaitForTextFile Function
 function WaitForTextFile {
     param([string]$PathToFile)
 
@@ -451,10 +423,45 @@ WaitForTextFile -PathToFile "D:\tmp\test.txt"
 
  ```
 
+   ##### Function ip Spoofing v2
+   ```powershell
 
- 
- 
+   #ip Spoofing v2
+   function Test-IPRange {
+       param (
+           [string]$Subnet = "10.22.40",
+           [int]$StartRange = 1,
+           [int]$EndRange = 254
+       )
+   
+       $StartRange..$EndRange | ForEach-Object {
+           $ip = "$Subnet.$_"
+           if (Test-Connection -ComputerName $ip -Count 1 -Quiet) {
+               Write-Host "$ip is active" -ForegroundColor Green
+           } else {
+               Write-Host "$ip is inactive" -ForegroundColor Red
+           }
+       }
+   }
 
+   # Beispielaufruf:
+   Test-IPRange -Subnet "192.168.1" -StartRange 1 -EndRange 254
+ 
+ ```
+
+   ##### CMD - extend FSLogix Disk with Diskpart
+   ```powershell
+
+   diskpart
+   sel vdisk file ="U:\UPD\256094_002_S-1-5-21-1644491937-813497703-725345543-59430\Profile_256094_002.VHDX"
+   expand vdisk maximum=102400
+   attach vdisk
+   sel par 1
+   extend
+   detach vdisk
+   exit
+
+ ```
 
 
 
