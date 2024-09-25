@@ -543,6 +543,11 @@ kill-all-Tasks
    ##### gPing via Scoop
 
    ```powershell
+#Scoop installieren als non-Admin
+   irm get.scoop.sh | iex
+   # You can use proxies if you have network trouble in accessing GitHub, e.g.
+   irm get.scoop.sh -Proxy 'http://<ip:port>' | iex
+
 #Scoop installieren als Admin
    irm get.scoop.sh -outfile 'install.ps1'
    .\install.ps1 -RunAsAdmin [-OtherParameters ...]
@@ -552,9 +557,11 @@ kill-all-Tasks
 #Install gPing via Scoop
    scoop install gping
 
-#Usage
+#Usage & URL
 gping 172.19.19.11 8.8.8.8
 
+#URL gPing   https://github.com/orf/gping?tab=readme-ov-file#usage-saxophone
+#URL scoop   https://github.com/ScoopInstaller/Install#for-admin
+
  ```
-URL gPing   https://github.com/orf/gping?tab=readme-ov-file#usage-saxophone
-URL scoop   https://github.com/ScoopInstaller/Install#for-admin
+
