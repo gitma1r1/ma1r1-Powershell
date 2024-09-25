@@ -540,4 +540,21 @@ foreach ($TaskServer in $TaskServers) {
 kill-all-Tasks
 
  ```
+   ##### gPing via Scoop
 
+   ```powershell
+#Scoop installieren als Admin
+   irm get.scoop.sh -outfile 'install.ps1'
+   .\install.ps1 -RunAsAdmin [-OtherParameters ...]
+   # I don't care about other parameters and want a one-line command
+   iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+
+#Install gPing via Scoop
+   scoop install gping
+
+#Usage
+gping 172.19.19.11 8.8.8.8
+
+ ```
+URL gPing   https://github.com/orf/gping?tab=readme-ov-file#usage-saxophone
+URL scoop   https://github.com/ScoopInstaller/Install#for-admin
