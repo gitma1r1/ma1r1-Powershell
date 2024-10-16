@@ -302,7 +302,11 @@ Get-Mailbox -ResultSize Unlimited -OrganizationalUnit "OU=211759,OU=AT,OU=ASP-Ku
 Get-Mailbox -OrganizationalUnit "OU=206090,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" | Where {$_.ForwardingAddress -ne $null} | Select Name, Alias, ForwardingAddress, DeliverToMailboxAndForward
 
 #Mailboxsize
-Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" -ResultSize Unlimited | Get-MailboxStatistics | Sort-Object TotalItemSize -Descending | Select-Object DisplayName,Alias,TotalItem
+#Mailboxsize
+Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" -ResultSize Unlimited | 
+    Get-MailboxStatistics | 
+    Sort-Object TotalItemSize -Descending | 
+    Select-Object DisplayName, Alias, @{Name="TotalItemSize (MB)"; Expression={$_.TotalItemSize.Value.ToMB()}}
 ```
 
  
