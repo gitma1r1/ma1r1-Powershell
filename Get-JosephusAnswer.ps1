@@ -21,3 +21,4 @@ $i = 2
       }
 }
 Set-JosephusNumber -n 100 #Input 100 
+#test
