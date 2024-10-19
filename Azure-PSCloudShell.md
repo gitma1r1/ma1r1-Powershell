@@ -25,12 +25,8 @@
 
 
 ##### Azure-Boot-Shutdown-VMs
-   ```powershell
 
-Install-Module -Name AZ -AllowClobber -Force                                           #Install AZ Module (Powrshell 7)
-
-##### Install AZ Module for Powershell 7 (need first installed on Windows)
-   ```powershell
+```powershell
 
 ﻿#Credentials 
 (get-credential).password|convertFrom-SecureString|set-content C:\Users\mai156\Desktop\cred-mai156-sp-aztechnik.txt $password = get-content C:\Users\mai156\Desktop\cred-mai156-sp-aztechnik.txt | convertto-securestring $User = "1b61339f4-e188-4d35f-a345d-4e4c92d048692d" $Credential = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList $User, $password
