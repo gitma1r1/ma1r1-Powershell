@@ -108,23 +108,21 @@ Remove-Variable -Name firstname -Force                    # Remove a variable, w
    $a -lt 3                              # Less than comparison operator
 
    $FirstName = 'Trevor'
-   $FirstName -like 'T*'                               # Perform string comparison using the -like operator, which supports the wildcard (*) character. Returns $true
+   $FirstName -like 'T*'                 # Perform string comparison using the -like operator, which supports the wildcard (*) character. Returns $true
    
-   $BaconIsYummy = $true
-   $FoodToEat = $BaconIsYummy ? 'bacon' : 'beets'      # Sets the $FoodToEat variable to 'bacon' using the ternary operator
    
    'Celery' -in @('Bacon', 'Sausage', 'Steak', 'Chicken')    # Returns boolean value indicating if left-hand operand exists in right-hand array
    'Celery' -notin @('Bacon', 'Sausage', 'Steak')            # Returns $true, because Celery is not part of the right-hand list
    
-   5 -is [string]                                            # Is the number 5 a string value? No. Returns $false.
-   5 -is [int32]                                             # Is the number 5 a 32-bit integer? Yes. Returns $true.
-   5 -is [int64]                                             # Is the number 5 a 64-bit integer? No. Returns $false.
-   'Trevor' -is [int64]                                      # Is 'Trevor' a 64-bit integer? No. Returns $false.
-   'Trevor' -isnot [string]                                  # Is 'Trevor' NOT a string? No. Returns $false.
-   'Trevor' -is [string]                                     # Is 'Trevor' a string? Yes. Returns $true.
-   $true -is [bool]                                          # Is $true a boolean value? Yes. Returns $true.
-   $false -is [bool]                                         # Is $false a boolean value? Yes. Returns $true.
-   5 -is [bool]                                              # Is the number 5 a boolean value? No. Returns $false.
+   5 -is [string]                           # Is the number 5 a string value? No. Returns $false.
+   5 -is [int32]                            # Is the number 5 a 32-bit integer? Yes. Returns $true.
+   5 -is [int64]                            # Is the number 5 a 64-bit integer? No. Returns $false.
+   'Trevor' -is [int64]                     # Is 'Trevor' a 64-bit integer? No. Returns $false.
+   'Trevor' -isnot [string]                 # Is 'Trevor' NOT a string? No. Returns $false.
+   'Trevor' -is [string]                    # Is 'Trevor' a string? Yes. Returns $true.
+   $true -is [bool]                         # Is $true a boolean value? Yes. Returns $true.
+   $false -is [bool]                        # Is $false a boolean value? Yes. Returns $true.
+   5 -is [bool]                             # Is the number 5 a boolean value? No. Returns $false.
 
 
 ###################################################
