@@ -4,7 +4,7 @@
 > **MS quick start Azure Powershell Cloud: https://learn.microsoft.com/de-de/azure/cloud-shell/quickstart-powershell**
 
 
-#### Azure Naming Convention
+#### 01 - Azure Naming Convention
 
 | First Header  | Second Header |
 | ------------- | ------------- |
@@ -23,6 +23,7 @@
 
 > **Command-List MS Learn: https://learn.microsoft.com/en-us/cli/azure/reference-index?view=azure-cli-latest**
 
+#### 02 - Skripts
 
 ##### Azure-Boot-Shutdown-VMs
 
