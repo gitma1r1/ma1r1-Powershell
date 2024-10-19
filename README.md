@@ -338,6 +338,18 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
    #Ram auslesen in GB
    (Get-WmiObject -Class Win32_PhysicalMemory | Select-Object -expandProperty Capacity)/1GB        #Ram Auslesen und auf GB umrechnen
 
+   #IPv4 auslesen
+   Get-NetIPAddress -AddressFamily IPv4 | where-object IPAddress -notmatch "^(169)|(127)" | Sort-Object IPAddress | select IPaddress,Interface* #ipv4
+
+  #Startzeit PC auslesen
+   (gcim win32_operatingsystem).LastBootUpTime
+
+   #Freien Speicher von C: auselsen
+   (gcim win32_logicaldisk -filter "deviceid = 'C:'").FreeSpace/1gb
+
+   #oder mit PSDrive
+   (gdr c).Free/1gb
+
    #Icons aus dll exportieren
    Export-Icon C:\windows\system32\imageres.dll             #export ico example:shell32.dll #dsuiext.dll
 
