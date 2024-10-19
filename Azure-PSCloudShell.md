@@ -40,14 +40,11 @@ Connect-AzAccount -Credential $Credential -ServicePrincipal -Tenant "9c8620b7-83
 
  #Start
 Start-AzVM -ResourceGroupName "rg-loi357-prod" -Name "vm-mai156-prod"​
-
-
-
 get-installedmodule -name az -allversions | Select-Object -Property Name, Version      #get Version of AZ module
-
 connect-azaccount                                                                      #Login the Azure Account -> open Browser for Login
 
 ```
+
 
 ##### Azure-connect-Storage-Netzlaufwerk
    ```powershell
