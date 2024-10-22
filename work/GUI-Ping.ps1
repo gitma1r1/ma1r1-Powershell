@@ -1,4 +1,7 @@
-﻿# Import necessary assemblies for the form, drawing, and charts
+
+ #Grafischer Ping mit Powershell like GPing
+ 
+ # Import necessary assemblies for the form, drawing, and charts
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName System.Windows.Forms.DataVisualization
