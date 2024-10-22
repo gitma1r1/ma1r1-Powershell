@@ -1,7 +1,7 @@
 #requires -module ScheduledTasks
 
 #update PowerShell help via a Scheduled Task
-$cred = Get-Credential "$env:USERDOMAIN\$env:USERNAME"
+$cred = Get-Credential "nb-mai156-neu\admin"
 
 # for Windows PowerShell
 # $action = New-ScheduledTaskAction -execute  powershell.exe -argument '-noprofile -command "&{Update-Help -force}"'
