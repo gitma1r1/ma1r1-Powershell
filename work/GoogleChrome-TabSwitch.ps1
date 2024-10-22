@@ -1,4 +1,6 @@
-﻿$chromePath = "C:\Program Files\Google\Chrome\Application\chrome.exe"  # Path to Chrome executable
+
+#TabSwitch for Google Chrome 
+$chromePath = "C:\Program Files\Google\Chrome\Application\chrome.exe"  # Path to Chrome executable
 $url1 = "https://prtg.bmd.at/map.htm?id=27028&tabid=1"  # First URL to navigate to
 $url2 = "http://book-reports.bplaced.net/2022/index.html"  # Second URL to navigate to
 $url3 = "http://book-reports.bplaced.net/2021/index.html"  # 3. URL to navigate to
