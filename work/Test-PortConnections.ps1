@@ -29,8 +29,6 @@
     # Entferne doppelte Ports und sortiere die Liste
     $PortList = $PortList | Select-Object -Unique | Sort-Object
 
-    $currentIteration = 0  # Zähler für die Anzahl der Durchläufe
-
     # Falls eine Subnet-Range angegeben wurde, füge die IP-Adressen der Hosts-Liste hinzu
     if ($Subnet) {
         $TargetHosts = @()
@@ -38,6 +36,8 @@
             $TargetHosts += "$Subnet.$_"
         }
     }
+
+    $currentIteration = 0  # Zähler für die Anzahl der Durchläufe
 
     while ($Count -eq -1 -or $currentIteration -lt $Count) {
         if ($prioPort) {
@@ -60,64 +60,63 @@
         # Warte für das angegebene Intervall, bevor die nächste Abfrage erfolgt
         Start-Sleep -Seconds $Interval
     }
+
+    function Test-HostPortConnection {
+        param (
+            [string]$TargetHost,
+            [int]$Port,
+            [switch]$Ping,
+            [int]$Timeout
+        )
+
+        try {
+            # DNS-Abfrage, um die IP-Adresse zu erhalten, falls es kein Subnet ist
+            $ResolvedIPs = if ($TargetHost -match '\d{1,3}(\.\d{1,3}){3}') { 
+                $TargetHost  # Falls es sich um eine IP handelt, verwende diese
+            } else {
+                [System.Net.Dns]::GetHostAddresses($TargetHost) | Select-Object -First 1
+            }
+        } catch {
+            # Falls die DNS-Abfrage fehlschlägt
+            Write-Host "Fehler bei der DNS-Auflösung für $TargetHost." -ForegroundColor Red
+            return
+        }
+
+        if ($Ping) {
+            # ICMP-Ping
+            $pingResult = Test-Connection -ComputerName $TargetHost -Count 1 -ErrorAction SilentlyContinue
+            if ($pingResult) {
+                Write-Host "$TargetHost ($ResolvedIPs) | Status: Ping erfolgreich | Latenz: $($pingResult.ResponseTime) ms" -ForegroundColor Green
+            } else {
+                Write-Host "$TargetHost ($ResolvedIPs) | Status: Ping fehlgeschlagen"
+            }
+        } else {
+            # TCP-Port-Test
+            $TCPClient = [System.Net.Sockets.TcpClient]::new()
+
+            # Starte die Zeitmessung für die Verbindung
+            $Stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+
+            # Versuche, eine Verbindung zu dem aktuellen Port herzustellen und warte auf das Ergebnis
+            $Result = $TCPClient.ConnectAsync($ResolvedIPs, $Port).Wait($Timeout)
+
+            # Stoppe die Zeitmessung
+            $Stopwatch.Stop()
+            $Latency = $Stopwatch.ElapsedMilliseconds  # Latenzzeit in Millisekunden
+
+            # Schließe die Verbindung
+            $TCPClient.Close()
+
+            # Ausgabe der Verbindungsinformationen
+            if ($Result) {
+                Write-Host "$TargetHost ($ResolvedIPs) | Port: $Port | Status: True | Latenz: $Latency ms" -ForegroundColor Green
+            } else {
+                Write-Host "$TargetHost ($ResolvedIPs) | Port: $Port | Status: False"
+            }
+        }
+    }
 }
 
-function Test-HostPortConnection {
-    param (
-        [string]$TargetHost,
-        [int]$Port,
-        [switch]$Ping,
-        [int]$Timeout
-    )
-
-    try {
-        # DNS-Abfrage, um die IP-Adresse zu erhalten, falls es kein Subnet ist
-        $ResolvedIPs = if ($TargetHost -match '\d{1,3}(\.\d{1,3}){3}') { 
-            $TargetHost  # Falls es sich um eine IP handelt, verwende diese
-        } else {
-            [System.Net.Dns]::GetHostAddresses($TargetHost) | Select-Object -First 1
-        }
-    } catch {
-        # Falls die DNS-Abfrage fehlschlägt
-        Write-Host "Fehler bei der DNS-Auflösung für $TargetHost." -ForegroundColor Red
-        return
-    }
-
-    if ($Ping) {
-        # ICMP-Ping
-        $pingResult = Test-Connection -ComputerName $TargetHost -Count 1 -ErrorAction SilentlyContinue
-        if ($pingResult) {
-            Write-Host "$TargetHost ($ResolvedIPs) | Status: Ping erfolgreich | Latenz: $($pingResult.ResponseTime) ms" -ForegroundColor Green
-        } else {
-            Write-Host "$TargetHost ($ResolvedIPs) | Status: Ping fehlgeschlagen"
-        }
-    } else {
-        # TCP-Port-Test
-        $TCPClient = [System.Net.Sockets.TcpClient]::new()
-
-        # Starte die Zeitmessung für die Verbindung
-        $Stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
-
-        # Versuche, eine Verbindung zu dem aktuellen Port herzustellen und warte auf das Ergebnis
-        $Result = $TCPClient.ConnectAsync($ResolvedIPs, $Port).Wait($Timeout)
-
-        # Stoppe die Zeitmessung
-        $Stopwatch.Stop()
-        $Latency = $Stopwatch.ElapsedMilliseconds  # Latenzzeit in Millisekunden
-
-        # Schließe die Verbindung
-        $TCPClient.Close()
-
-        # Ausgabe der Verbindungsinformationen
-        if ($Result) {
-            Write-Host "$TargetHost ($ResolvedIPs) | Port: $Port | Status: True | Latenz: $Latency ms" -ForegroundColor Green
-        } else {
-            Write-Host "$TargetHost ($ResolvedIPs) | Port: $Port | Status: False"
-        }
-
-    }
-                 
-}
 
 # Beispiel-Aufruf Single IP Single Port (like tnc)
 Test-PortConnections -TargetHosts @("orf.at") -Ports @(80) -Count 1
