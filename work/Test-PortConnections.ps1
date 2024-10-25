@@ -1,6 +1,6 @@
 ﻿function Test-PortConnections {
     param (
-        [string[]]$TargetHosts = @("prtg.bmd.at"),  # Liste von Hosts als Array
+        [string[]]$TargetHosts = @("localhost"),    # Liste von Hosts als Array
         [int[]]$Ports = @(80),                      # Liste der Ports als Array, Standard ist Port 80
         [int]$PortRangeStart,                       # Optionaler Start des Portbereichs
         [int]$PortRangeEnd,                         # Optionales Ende des Portbereichs
@@ -123,7 +123,7 @@ function Test-HostPortConnection {
 Test-PortConnections -TargetHosts @("orf.at") -Ports @(80) -Count 1
 
 # Beispiel-Aufruf der Funktion mit multi TargetHosts und multi Ports
-Test-PortConnections -TargetHosts @("192.168.0.1","orf.at") -Ports @(80,443) -Count 1
+Test-PortConnections -TargetHosts @("192.168.0.1","orf.at","192.167.0.1") -Ports @(22,80,443) -Count 1
 
 # Beispiel-Aufruf der Funktion mit prioPort (ports)
 Test-PortConnections -Subnet "192.168.0" -StartRange 1 -EndRange 10 -Ports @(80,443) -prioPort -Count 1
@@ -133,3 +133,5 @@ Test-PortConnections -Subnet "192.168.0" -StartRange 1 -EndRange 10 -Ports @(80,
 
 # Beispiel-Aufruf der Funktion mit Ping IPRange
 Test-PortConnections -Subnet "192.168.0" -StartRange 1 -EndRange 10 -Count 1 -Ping
+Test-PortConnections -TargetHosts @("orf.at") -Ping -Count 1
+Test-PortConnections -TargetHosts @("192.161.10.111") -Ping -Count 1
