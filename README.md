@@ -275,6 +275,8 @@ Remove-PSDrive -Name xyz                                    # Delete a PSDrive
    netsh.exe wlan show profiles name=’A1-morty-5G’ key=clear       #Wlan SSID und Kennwort auslesen
    netsh wlan show networks                                        #Wlan SSID auslesen
 
+   portqry -n 192.168.100.51 -e 9001 -p UDP                        #UDP Port Scan
+
  ```
  
  
