@@ -373,6 +373,10 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
    Set-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
 
+#Teams App neu bereitstellen
+%windir%\explorer.exe shell:AppsFolder\MSTeams_8wekyb3d8bbwe!MSTeams
+
+
  ```
 
 ### Chapter 6 - Examples , Function
