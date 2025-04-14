@@ -379,6 +379,9 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
 #Symlink oder Mlink von einem Ordner - Target
 Get-ChildItem -Path "D:\bmdcom\BMDWeb220598" | Select Name, LinkType, Target
 
+#ganzer Pfad
+Get-ChildItem -Path "D:\bmdcom\" -Recurse -Force | Where-Object { $_.Attributes -match "ReparsePoint" } | select-Object FullName, LinkType, Target
+
 
  ```
 
