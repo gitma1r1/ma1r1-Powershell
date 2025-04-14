@@ -376,6 +376,9 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
 #Teams App neu bereitstellen
 %windir%\explorer.exe shell:AppsFolder\MSTeams_8wekyb3d8bbwe!MSTeams
 
+#Symlink oder Mlink von einem Ordner - Target
+Get-ChildItem -Path "D:\bmdcom\BMDWeb220598" | Select Name, LinkType, Target
+
 
  ```
 
