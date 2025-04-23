@@ -385,6 +385,13 @@ Get-ChildItem -Path "D:\bmdcom\BMDWeb220598" | Select Name, LinkType, Target
 #ganzer Pfad
 Get-ChildItem -Path "D:\bmdcom\" -Recurse -Force | Where-Object { $_.Attributes -match "ReparsePoint" } | select-Object FullName, LinkType, Target
 
+#55 Zeit
+
+c:
+cd \
+cd data\bmd_data\bin
+start bmdwin.exe /w /P#ZEIT#/start800
+
 
  ```
 
