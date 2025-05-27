@@ -386,12 +386,16 @@ Get-ChildItem -Path "D:\bmdcom\BMDWeb220598" | Select Name, LinkType, Target
 Get-ChildItem -Path "D:\bmdcom\" -Recurse -Force | Where-Object { $_.Attributes -match "ReparsePoint" } | select-Object FullName, LinkType, Target
 
 #55 Zeit
-
 c:
 cd \
 cd data\bmd_data\bin
 start bmdwin.exe /w /P#ZEIT#/start800
 
+#5 Prozesse mit meister CPU
+Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 Name, Id, CPU
+
+#CMD als SYSTEM starten
+psexec.exe -s -i cmd.exe
 
  ```
 
