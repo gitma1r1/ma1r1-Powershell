@@ -397,6 +397,18 @@ Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 Name, Id, CPU
 #CMD als SYSTEM starten
 psexec.exe -s -i cmd.exe
 
+#typische exen (Drucker) killen
+
+Prozessname	                  Beschreibung
+PrintIsolationHost.exe	      Druckprozess-Isolation, oft in WOW64-Instanz
+splwow64.exe	               „Spooler WOW64“ – Vermittelt zwischen 32- und 64-Bit
+printfilterpipelinesvc.exe	   Teil der Druckverarbeitungspipeline
+spoolsv.exe	Hauptdruckdienst (Spooler)
+
+pskill spoolsv.exe
+pskill 
+
+
  ```
 
 ### Chapter 6 - Examples , Function
