@@ -397,6 +397,9 @@ Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 Name, Id, CPU
 #CMD als SYSTEM starten
 psexec.exe -s -i cmd.exe
 
+#CMD als SYSTEM starten
+psexec -sid cmd
+
 #typische exen (Drucker) killen
 
 Prozessname	                  Beschreibung
