@@ -228,7 +228,10 @@ add-ntfsaccess -path D:\temp\ -Account domain\Domänen-Benutzer -AccessRights Re
 ###################################################
 # Powerhsell Version auslesen
 ###################################################
+   #Powershell Version auslesen (v1)
+   $PSVersionTable.PSVersion
 
+   #Powershell Version auslesen (v2)
    $PowershellVersion = ($PSVersionTable).PSVersion | Select-Object major -ExpandProperty major #Powershell Version
    Write-Host "Powershell Version: $PowershellVersion" 
 
