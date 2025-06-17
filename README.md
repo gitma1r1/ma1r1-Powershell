@@ -414,6 +414,8 @@ spoolsv.exe	Hauptdruckdienst (Spooler)
 pskill spoolsv.exe
 pskill 
 
+#Debug von Parametern EXE (Strings - Sysinternal)
+strings.exe bmdntcs.exe > bmdntcs.txt
 
  ```
 
