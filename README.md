@@ -419,6 +419,15 @@ strings.exe bmdntcs.exe > bmdntcs.txt
 
  ```
 
+### Chapter 5b - Azure Portal - Run Command Script
+
+  ```powershell
+#neuen lokalen Admin anlegen
+net user NeuerAdmin "SicheresPasswort123!" /add
+net localgroup Administrators NeuerAdmin /add
+ ```
+
+
 ### Chapter 6 - Examples , Function
  
    ##### Function - SID auslesen: Variante 1
