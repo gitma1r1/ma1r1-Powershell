@@ -417,6 +417,11 @@ pskill
 #Debug von Parametern EXE (Strings - Sysinternal)
 strings.exe bmdntcs.exe > bmdntcs.txt
 
+
+#Windows 11 aktivieren
+irm https://get.activated.win | iex #Info: https://massgrave.dev/
+
+
  ```
 
 ### Chapter 5b - Azure Portal - Run Command Script
