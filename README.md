@@ -698,28 +698,39 @@ function Test-HostPortConnection {
     }
 }
 
+# Beispiel-Aufrufe:
+##Einfach
+# Single TargetHost - Single Port - Test: Ping
+    Test-PortConnections -TargetHosts @("orf.at") -Ports @(80) -Ping -Count 1
+# Single TargetHost - Single Port - Test: Port
+    Test-PortConnections -TargetHosts @("orf.at") -Ports @(80) -Count 1
+# Multi TargetHosts - Single Port - Test: Ports
+    Test-PortConnections -TargetHosts @("192.168.0.1","orf.at","192.167.0.1") -Ports @(80) -Count 1
+# Multi TargetHosts - Multi Port - prio IP
+    Test-PortConnections -TargetHosts @("192.168.0.1","orf.at","192.167.0.1") -Ports @(22,80,443) -Count 1
+# Multi TargetHosts - Multi Port - prio Port
+    Test-PortConnections -TargetHosts @("192.168.0.1","orf.at","192.167.0.1") -Ports @(22,80,443) -prioPort -Count 1
 
-# Beispiel-Aufruf Single IP Single Port (like tnc)
-# Test-PortConnections -TargetHosts @("orf.at") -Ports @(80) -Count 1
+##Subnet
+# SubNet Target - - Test: Ping
+    Test-PortConnections -Subnet "10.22.40" -StartRange 1 -EndRange 254 -Count 1 -Ping
+# SubNet Target - Single Port - prio IP
+    Test-PortConnections -Subnet "192.168.0" -StartRange 1 -EndRange 10 -Ports @(80) -prioPort -Count 1
+# SubNet Target - Multi Port - prio Port
+    Test-PortConnections -Subnet "192.168.0" -StartRange 1 -EndRange 10 -Ports @(80,443) -prioPort -Count 1
 
-# Beispiel-Aufruf der Funktion mit multi TargetHosts und multi Ports
-# Test-PortConnections -TargetHosts @("192.168.0.1","orf.at","192.167.0.1") -Ports @(22,80,443) -Count 1
-# Test-PortConnections -TargetHosts @("10.250.251.11","10.250.251.12","10.250.251.13","orf.at","asp-dms-stable") -Ports @(22,80,81,86,443,8080,8443) -PortRangeStart 30464 -PortRangeEnd 30470 -prioPort -Count 1
+##Port Range
+# Single TargetHosts - Port Range - Test: Ports
+    Test-PortConnections -TargetHosts @("80.121.194.193") -PortRangeStart 20 -PortRangeEnd 25 -prioPort -Count 1
+# Single TargetHosts - Multi Ports + Port Range - Test: Ports
+    Test-PortConnections -TargetHosts @("80.121.194.193") -Ports @(22,80,443,8000,8123) -PortRangeStart 20 -PortRangeEnd 25 -prioPort -Count 1
+# Multi TargetHosts - Multi Ports + Port Range - Test: Ports
+    Test-PortConnections -TargetHosts @("10.250.251.11","10.250.251.12","10.250.251.13","orf.at","asp-dms-stable") -Ports @(22,80,81,86,443,8080,8443) -PortRangeStart 30464 -PortRangeEnd 30470 -prioPort -Count 1
+# SubNet Target - Port Range
+    Test-PortConnections -Subnet "10.250.251" -StartRange 1 -EndRange 254 -PortRangeStart 30464 -PortRangeEnd 30470 -Count 1
 
-# Beispiel-Aufruf der Funktion mit prioPort (ports)
-# Test-PortConnections -Subnet "192.168.0" -StartRange 1 -EndRange 10 -Ports @(80,443) -prioPort -Count 1
 
-# Beispiel-Aufruf der Funktion mit prioPort (ports) + PortRange
-# Test-PortConnections -Subnet "10.250.251" -StartRange 1 -EndRange 254 -Ports @(22,80,443,8080,8443) -PortRangeStart 30464 -PortRangeEnd 30470 -prioPort -Count 1
- Test-PortConnections -TargetHosts @("80.121.194.193") -Ports @(22,80,443,8123) -PortRangeStart 20 -PortRangeEnd 25 -prioPort -Count 1
- Test-PortConnections -TargetHosts @("80.121.194.193") -PortRangeStart 1 -PortRangeEnd 1023 -prioPort #well known ports
- Test-PortConnections -TargetHosts @("80.121.194.193") -PortRangeStart 1023 -PortRangeEnd 49151 -prioPort #Registered Ports
 
-# Beispiel-Aufruf der Funktion mit Ping IPRange
-# Test-PortConnections -Subnet "10.22.40" -StartRange 1 -EndRange 254 -Count 1 -Ping
-# Test-PortConnections -TargetHosts @("10.22.40.61") -Ports @(22,80,443,8080,8443) -Count 1
-# Test-PortConnections -TargetHosts @("192.168.10.111") -Ping -Count 1
-# Test-PortConnections -TargetHosts @("172.19.19.11","orf.at") -Ping -count 3
 
 ```
 
