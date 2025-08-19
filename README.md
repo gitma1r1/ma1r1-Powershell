@@ -432,6 +432,16 @@ net user NeuerAdmin "SicheresPasswort123!" /add
 net localgroup Administrators NeuerAdmin /add
  ```
 
+### Chapter 5c - SSH - Terminal
+
+  ```powershell
+#via SSH verbinden 
+ssh ma1r1@192.168.0.106
+
+#File kopieren z.b. auf Raspberry
+scp D:\temp_privat\Trattenbach-Netzwerk.drawio.svg ma1r1@192.168.0.106:/home/ma1r1/
+ ```
+
 
 ### Chapter 6 - Examples , Function
  
