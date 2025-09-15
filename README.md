@@ -421,6 +421,10 @@ strings.exe bmdntcs.exe > bmdntcs.txt
 #Windows 11 aktivieren
 irm https://get.activated.win | iex #Info: https://massgrave.dev/
 
+#Defender Check exclusion
+$(get-mpPreference).ExclusionProcess
+$(get-mpPreference).AttackSurfaceReductionOnlyExclusions
+
 
  ```
 
@@ -431,6 +435,8 @@ irm https://get.activated.win | iex #Info: https://massgrave.dev/
 net user NeuerAdmin "SicheresPasswort123!" /add
 net localgroup Administrators NeuerAdmin /add
  ```
+
+
 
 ### Chapter 5c - SSH - Terminal
 
