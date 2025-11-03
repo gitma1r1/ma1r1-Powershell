@@ -426,6 +426,17 @@ $(get-mpPreference).ExclusionProcess
 $(get-mpPreference).AttackSurfaceReductionOnlyExclusions
 
 
+#Download BMDNTCS Erstinstall ISO via PS7 & curl
+   #install PS7
+   winget install --id Microsoft.PowerShell --source winget
+   
+   #download ISO to temp
+   $Url = "https://cdn.bmd.com/ntcs/erstinstallation.iso"
+   $OutFile = "C:\temp\erstinstallation.iso"
+   curl -L -C - -o $OutFile $Url
+
+
+
  ```
 
 ### Chapter 5b - Azure Portal - Run Command Script
