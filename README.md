@@ -436,6 +436,11 @@ $(get-mpPreference).AttackSurfaceReductionOnlyExclusions
    curl -L -C - -o $OutFile $Url
 
 
+WSL Linux:
+wsl -d Ubuntu -- bash -lc "koreader 
+
+
+
 
  ```
 
