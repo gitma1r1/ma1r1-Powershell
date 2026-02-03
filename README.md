@@ -437,7 +437,9 @@ $(get-mpPreference).AttackSurfaceReductionOnlyExclusions
 
 
 WSL Linux:
-wsl -d Ubuntu -- bash -lc "koreader 
+wsl -d Ubuntu -- bash -lc "koreader
+
+wsl bash -ic "koreader"
 
 
 
