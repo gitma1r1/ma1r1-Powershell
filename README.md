@@ -329,6 +329,7 @@ Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=lo
 
    #Papierkorb leeren
    Clear-RecycleBin -Force                         #Papierkorb leeren
+   Remove-Item -Path 'D:\$Recycle.Bin\*' -Recurse -Force -ErrorAction SilentlyContinue
 
    #Netlaufwerk Force entfernen
    Remove-SmbMapping -RemotePath \\server\share -LocalPath Z: -Force  #remove SMBShare
