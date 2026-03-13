@@ -1,8 +1,7 @@
 ------------- 🛡️ Powershell Bunker -------------- 🗺️ Navigation \& Struktur ------------------------
 
 / (Root)
-├── 📂 01_Work_Admin/             # 💼 Alles für den Job (BMD, Azure, PRTG, SQL)
-
+├── 📂 01_Work_Admin/             # 💼 Alles für den Job (BMD, Azure, PRTG, SQL)'r
 │   ├── ☁️ Azure/                 # Naming, VM-Skripte, Storage
 │   ├── 📊 PRTG/                  # Custom Sensoren (Adobe, FSLogix, etc.)
 │   ├── 🗄️ SQL_BMD/               # Migrations-Scripts & Cloud-Parameter
