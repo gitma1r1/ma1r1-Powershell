@@ -2,15 +2,7 @@
 
 
 
-> \*\*Admin:\*\* ma1r1 | \*\*Status:\*\* Einsatzbereit 🚀 | \*\*Focus:\*\* BMD, Azure \& Automation
-
-
-
----
-
-
-
-\## 🗺️ Navigation \& Struktur
+\### 🗺️ Repository-Struktur
 
 ```text
 
@@ -34,9 +26,9 @@
 
 └── 📂 03\_Library\_Functions/  # ⚙️ Wiederverwendbare Power-Tools
 
-|   ├── 🌐 Network\_Scanner\_V3.ps1
+&nbsp;   ├── 🌐 Network\_Scanner\_V3.ps1
 
-|   └── 👤 AD\_User\_Helpers.ps1│
+&nbsp;   └── 👤 AD\_User\_Helpers.ps1
 
 └── 📄 README.md                  # 📍 Dieses Menü
 
