@@ -35,3 +35,9 @@
 │   ├── 🐍 03_Scripts_Testing	#📂Unfertiges, Experimente
 │
 └── 📄 README.md #📍 Dieses Menü
+
+
+---------------------------
+	
+## 🗺️ Quick & Copy
+text
