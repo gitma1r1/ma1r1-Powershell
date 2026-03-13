@@ -1,14 +1,8 @@
 \# 🛡️ Powershell Bunker
 
-
-
-> \*\*Admin:\*\* ma1r1 | \*\*Status:\*\* Einsatzbereit 🚀 | \*\*Focus:\*\* BMD, Azure \& Automation
-
-
+> \*\*Admin:\*\* ma1r1
 
 ---
-
-
 
 \## 🗺️ Navigation \& Struktur
 
