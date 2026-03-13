@@ -9,10 +9,10 @@
 ├── 💼 01_Work_Admin	#📂BMD Work Folder mai156
 │   ├── 📖 01_Basics	#📂"Get-Command", "Get-Help", "Get-Variable", "Operators", "Flow Control"
 │   ├── 🌐 02_Network	#📂"Test-Connection", "Test-NetConnection", "Portscan", "WLAN-Profiles"
-│   ├── 🗄️ 03_SQL	#📂"sqlcmd", "SQL-Scripts" , Migrations-Scripts & Cloud-Parameter
+│   ├── 🗄️ 03_SQL		#📂"sqlcmd", "SQL-Scripts" , Migrations-Scripts & Cloud-Parameter
 │   │   └── 📄Vorlage-SQL-Script-Cloud.txt	#📄
 │   ├── 📧 04_Exchange	#📂"Get-Mailbox", "Mailbox-Statistics", "AD-Thumbnails"
-│   ├── 🖥️ 05_Windows		#📂"PowerCfg", "Cleanup-Image", "Disk-Space", "WMI-CIM", "App-Install"
+│   ├── 🖥️ 05_Windows	#📂"PowerCfg", "Cleanup-Image", "Disk-Space", "WMI-CIM", "App-Install"
 │   │   └── 🛡️Server_Basics-Help.ps1	#🛡️
 │   ├── 🧰 06_Tools	#📂"Taskkill", "PsExec", "Winget", "SSH", "SCP"
 │   ├── ☁️ 07_Azure	#📂Naming, VM-Skripte, Storage
