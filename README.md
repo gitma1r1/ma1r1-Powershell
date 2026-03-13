@@ -14,10 +14,10 @@
 │   ├── 📧 04_Exchange	#📂"Get-Mailbox", "Mailbox-Statistics", "AD-Thumbnails"
 │   ├── 🖥️ 05_Windows	#📂"PowerCfg", "Cleanup-Image", "Disk-Space", "WMI-CIM", "App-Install"
 │   │   └── 🛡️Server_Basics-Help.ps1	#🛡️
-│   ├── 🧰 06_Tools	#📂"Taskkill", "PsExec", "Winget", "SSH", "SCP"
-│   ├── ☁️ 07_Azure	#📂Naming, VM-Skripte, Storage
+│   ├── 🧰 06_Tools		#📂"Taskkill", "PsExec", "Winget", "SSH", "SCP"
+│   ├── ☁️ 07_Azure		#📂Naming, VM-Skripte, Storage
 │   │   └──  📄Azure-CheatSheet.md	#📄
-│   ├── 📊 08_PRTG	#📂Custom Sensoren (Adobe, FSLogix, etc.)
+│   ├── 📊 08_PRTG		#📂Custom Sensoren (Adobe, FSLogix, etc.)
 │   │   └── 📄README-PRTG Skripts.md	#📄
 │
 ├── ⚙️ 02_Library_Functions	#📂Wiederverwendbare Power-Tools
@@ -25,7 +25,7 @@
 │   └── 🛡️ AD_User_Helpers.ps1	#🛡️
 │
 ├── 🏠 03_Private_Projects	#📂Home Folder ma1r1
-│   └── 🏠 01_Home_Lab	#📂Alles was du nur privat brauchst
+│   └── 🏠 01_Home_Lab		#📂Alles was du nur privat brauchst
 │   └── 🛠️ 02_learning_units	#📂Powershell Übungen
 │   │   └── 🛡️ Get-Dreieckszahl-Gauss.ps1	#🛡️ermittelt Gausszahl
 │   │   └── 🛡️ Get-JosephusAnswer.ps1	#🛡️ermittelt Gausszah
