@@ -882,3 +882,16 @@ gping 172.19.19.11 8.8.8.8
 
  ```
 
+   ##### get more than 1000 files in folder
+
+   ```powershell
+Get-ChildItem -Path "D:\Data" -Recurse -Directory -ErrorAction SilentlyContinue | ForEach-Object {
+    $fileCount = (Get-ChildItem -Path $_.FullName -File).Count
+    if ($fileCount -gt 1000) {
+        [PSCustomObject]@{
+            "Ordnerpfad"   = $_.FullName
+            "Dateianzahl"  = $fileCount
+        }
+    }
+} | Format-Table -AutoSize
+ ```
