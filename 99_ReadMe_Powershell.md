@@ -1,0 +1,884 @@
+##### Chapter 0 - other Powershell GIT Cheatsheet
+> - https://gist.github.com/pcgeek86/336e08d1a09e3dd1a8f0a30a9fe61c8a#file-cheatsheet-ps1
+> - https://github.com/ab14jain/PowerShell
+> - https://jdhitsolutions.com/blog/powershell-tips-tricks-and-advice/
+> - https://learnxinyminutes.com/docs/powershell
+
+
+## Windows PowerShell-Cheatsheet
+
+### Chapter 1 - Powershell general
+
+   ```powershell
+
+###################################################
+# Get-Command
+###################################################
+
+   Get-Command                                     # like help in cmd
+   Get-Command -Module Microsoft*                  # Retrieves a list of all the modules named Microsoft*
+   Get-Command -Name *item                         # Retrieves a list of all commands ending in "item"
+   Get-Command | Sort-Object comand-type           # sorted output
+   Get-Command -Module hyper-v | Out-GridView      # show all hyper-v cmdlets
+   Get-Command -All                                # all commands
+
+   Get-ChildItem | Get-Member                      # Eigenschaften this gets you everything
+   Get-ChildItem | Get-Member -MemberType Property # Eigenschaften
+
+   Get-Host                                        # get the Host details
+
+   Get-Verb                                        #get the list of approved verbs
+
+   Get-History                                     #Get-History Powershell commands
+
+   get-alias –Definition Get-ChildItem             # definition parameter to get all aliases for a cmdlet
+   get-alias -name ls                              # what command an alias is running
+   get-alias -name %
+
+   Get-Help                                        # Get all help topics
+   Get-help Get-Process -Examples                  # Hilfe von einem Befehl
+   Get-help Get-Process -Online                    # Hilfe online
+   Get-help *-item                                 # Hilfe über alle Befehle mit *-item
+   Update-help                                     # Hilfe aktuallisieren
+   Get-Help -Name about_Variables                  # a specific about_* topic (aka. man page)
+   Get-Help -Name Get-Command                      # a specific PowerShell function
+   Get-Help -Name Get-Command -Parameter Module    # a specific parameter on a specific command
+
+   #Bildschirm "leeren"
+   Clear-Host                                      # same as cls in CMD; clears the screen
+   cls
+
+   #CMD command in powershell
+   cmd.exe /c dir                                  # cmd-Aufruf via Powershell
+
+   #$env
+   $env:COMPUTERNAME                # Computername
+   $env:USERNAME                    # USERNAME
+   $env:USERDNSDOMAIN               # USERDNSDOMAIN
+#NOTE: If you dont know all the variables part of it, after : type tab key to all those variables one-by-one.
+
+
+###################################################
+# Read-Host Example
+###################################################
+
+$adresse = Read-Host "Mail Adresse Eingeben: " #Read Host - List Eingabe in Variabe ein
+
+
+###################################################
+# Write-Host Example
+###################################################
+
+Write-Host "Red " -ForegroundColor red -nonewline; Write-Host "black " -ForegroundColor black -nonewline;
+Write-Host "Blue " -ForegroundColor blue; #ForegroundColor
+
+
+###################################################
+# Variables
+###################################################
+
+$a = 0                                                    # Initialize a variable
+[int] $a = 'Trevor'                                       # Initialize a variable, with the specified type (throws an exception)
+[string] $a = 'Trevor'                                    # Initialize a variable, with the specified type (doesn't throw an exception)
+
+Get-Command -Name *varia*                                 # Get a list of commands related to variable management
+
+Get-Variable                                              # Get an array of objects, representing the variables in the current and parent scopes 
+Get-Variable | ? { $PSItem.Options -contains 'constant' } # Get variables with the "Constant" option set
+Get-Variable | ? { $PSItem.Options -contains 'readonly' } # Get variables with the "ReadOnly" option set
+
+New-Variable -Name FirstName -Value Trevor
+New-Variable FirstName -Value Trevor -Option Constant     # Create a constant variable, that can only be removed by restarting PowerShell
+New-Variable FirstName -Value Trevor -Option ReadOnly     # Create a variable that can only be removed by specifying the -Force parameter on Remove-Variable
+
+Remove-Variable -Name firstname                           # Remove a variable, with the specified name
+Remove-Variable -Name firstname -Force                    # Remove a variable, with the specified name, that has the "ReadOnly" option set
+
+
+###################################################
+# Operators
+###################################################
+
+   $a = 2                                # Basic variable assignment operator
+   $a += 1                               # Incremental assignment operator
+   $a -= 1                               # Decrement assignment operator
+
+   $a -eq 0                              # Equality comparison operator
+   $a -ne 5                              # Not-equal comparison operator
+   $a -gt 2                              # Greater than comparison operator
+   $a -lt 3                              # Less than comparison operator
+
+   $FirstName = 'Trevor'
+   $FirstName -like 'T*'                 # Perform string comparison using the -like operator, which supports the wildcard (*) character. Returns $true
+   
+   
+   'Celery' -in @('Bacon', 'Sausage', 'Steak', 'Chicken')    # Returns boolean value indicating if left-hand operand exists in right-hand array
+   'Celery' -notin @('Bacon', 'Sausage', 'Steak')            # Returns $true, because Celery is not part of the right-hand list
+   
+   5 -is [string]                           # Is the number 5 a string value? No. Returns $false.
+   5 -is [int32]                            # Is the number 5 a 32-bit integer? Yes. Returns $true.
+   5 -is [int64]                            # Is the number 5 a 64-bit integer? No. Returns $false.
+   'Trevor' -is [int64]                     # Is 'Trevor' a 64-bit integer? No. Returns $false.
+   'Trevor' -isnot [string]                 # Is 'Trevor' NOT a string? No. Returns $false.
+   'Trevor' -is [string]                    # Is 'Trevor' a string? Yes. Returns $true.
+   $true -is [bool]                         # Is $true a boolean value? Yes. Returns $true.
+   $false -is [bool]                        # Is $false a boolean value? Yes. Returns $true.
+   5 -is [bool]                             # Is the number 5 a boolean value? No. Returns $false.
+
+
+###################################################
+# Regular Expressions
+###################################################
+
+'Trevor' -match '^T\w*'                                   # Perform a regular expression match against a string value. # Returns $true and populates $matches variable
+$matches[0]                                               # Returns 'Trevor', based on the above match
+
+@('Trevor', 'Billy', 'Bobby') -match '^B'                 # Perform a regular expression match against an array of string values. Returns Billy, Bobby
+
+$regex = [regex]'(\w{3,8})'
+$regex.Matches('Trevor Bobby Dillon Joe Jacob').Value     # Find multiple matches against a singleton string value.
+
+
+###################################################
+# Flow Control
+###################################################
+
+if (1 -eq 1) { }                                          # Do something if 1 is equal to 1
+
+do { 'hi' } while ($false)                                # Loop while a condition is true (always executes at least once)
+
+while ($false) { 'hi' }                                   # While loops are not guaranteed to run at least once
+while ($true) { }                                         # Do something indefinitely
+while ($true) { if (1 -eq 1) { break } }                  # Break out of an infinite while loop conditionally
+
+for ($i = 0; $i -le 10; $i++) { Write-Host $i }           # Iterate using a for..loop
+foreach ($item in (Get-Process)) { }                      # Iterate over items in an array
+
+switch ('test') { 'test' { 'matched'; break } }           # Use the switch statement to perform actions based on conditions. Returns string 'matched'
+switch -regex (@('Trevor', 'Daniel', 'Bobby')) {          # Use the switch statement with regular expressions to match inputs
+  'o' { $PSItem; break }                                  # NOTE: $PSItem or $_ refers to the "current" item being matched in the array
+}
+switch -regex (@('Trevor', 'Daniel', 'Bobby')) {          # Switch statement omitting the break statement. Inputs can be matched multiple times, in this scenario.
+  'e' { $PSItem }
+  'r' { $PSItem }
+}
+
+
+###################################################
+# Functions
+###################################################
+
+function add ($a, $b) { $a + $b }                         # A basic PowerShell function
+
+function Do-Something {                                   # A PowerShell Advanced Function, with all three blocks declared: BEGIN, PROCESS, END
+  [CmdletBinding]()]
+  param ()
+  begin { }
+  process { }
+  end { }
+}
+
+
+###################################################
+# Working with Modules
+###################################################
+
+Get-Command -Name *module* -Module mic*core                 # Which commands can I use to work with modules?
+
+Get-Module -ListAvailable                                   # Show me all of the modules installed on my system (controlled by $env:PSModulePath)
+Get-Module                                                  # Show me all of the modules imported into the current session
+
+$PSModuleAutoLoadingPreference = 0                          # Disable auto-loading of installed PowerShell modules, when a command is invoked
+
+Import-Module -Name NameIT                                  # Explicitly import a module, from the specified filesystem path or name (must be present in $env:PSModulePath)
+Remove-Module -Name NameIT                                  # Remove a module from the scope of the current PowerShell session
+
+#Install a Module example
+Install-Module -Name "ISESteroids" -Scope CurrentUser -Repository PSGallery -Force   #Install Module: ISESterioids
+Start-Steroids
+
+#Import a Module example 
+Import-Module NTFSSecurity 
+add-ntfsaccess -path D:\temp\ -Account domain\Domänen-Benutzer -AccessRights ReadandExecute #ReadandExecute , Modify
+
+
+###################################################
+# Dienst Beschreibung hinzufügen
+###################################################
+
+   Set-Service -name BMDNTCSSOAPService221255 -Description "BMDNTCSSoapservice für 221255- läuft auf TCP Port 12640" #Dienst Beschreibung hinzfügen
+
+
+###################################################
+# regedit File umbenennen
+###################################################
+
+   rename-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager' -Name "PendingFileRenameOperations" -NewName "_PendingFileRenameOperations" #PendingFileRenameOperations
+
+
+###################################################
+# /Process killen beenden
+###################################################
+
+   Taskkill /T /F /IM bmd*                               #beendet alle Prozesse mit bmd beginnend     
+   Taskkill /T /F /IM bmd.exe /bmd2.exe                  #beendet 2 bestimmte Prozesse
+   pskill -accepteula bmdntcs.exe                        #beendet bestimmten Prozesse
+
+
+###################################################
+# Powerhsell Version auslesen
+###################################################
+   #Powershell Version auslesen (v1)
+   $PSVersionTable.PSVersion
+
+   #Powershell Version auslesen (v2)
+   $PowershellVersion = ($PSVersionTable).PSVersion | Select-Object major -ExpandProperty major #Powershell Version
+   Write-Host "Powershell Version: $PowershellVersion" 
+
+
+###################################################
+# PowerShell Drives (PSDrives)
+###################################################
+
+Get-PSDrive                                                 # List all the PSDrives on the system
+New-PSDrive -Name videos -PSProvider Filesystem -Root x:\data\content\videos  # Create a new PSDrive that points to a filesystem location
+New-PSDrive -Name h -PSProvider FileSystem -Root '\\storage\h$\data' -Persist # Create a persistent mount on a drive letter, visible in Windows Explorer
+Set-Location -Path videos:                                  # Switch into PSDrive context
+Remove-PSDrive -Name xyz                                    # Delete a PSDrive
+
+```
+
+
+### Chapter 2 - Powershell - Network
+   ```powershell
+
+###################################################
+#Network
+###################################################
+
+   ping www.googel.at -force                                                 #ping in powershell
+   while($true){Test-Connection 8.8.8.8}                                     #permanent ping
+   (Test-NetConnection localhost).PingSucceeded                              #Ping with Boolean return
+   ipconfig /displaydns                                                      #shows the dns
+   (Invoke-WebRequest -uri "http://ifconfig.me/ip" -UseBasicParsing).Content #show public ip
+   1..254 | ForEach-Object {Test-Connection -ComputerName "192.168.0.$_" -Count 1 -ErrorAction SilentlyContinue}  #IP Spoofing 1-254 v1
+
+
+
+
+   Test-NetConnection -computer Computername -Port 89               #Test Port
+   dism /online /Enable-Feature /FeatureName:TelnetClient           #Telnet installieren
+   New-Object System.Net.Sockets.TcpClient("192.168.0.24", 3389)    #alternative zu Telnet
+   netstat -an |find /i "82"                                        #Port finden
+   cmd telnet 192.168.0.24 3389                                     #Telnet verbindung
+
+   #Port scan (slow version)
+   foreach ($port in 1..104) {If (($a=Test-NetConnection srvfs01 -Port $port -WarningAction SilentlyContinue).tcpTestSucceeded -eq $true){ "TCP port $port is open!"}}
+
+   netsh.exe wlan show profiles name=’A1-morty-5G’ key=clear       #Wlan SSID und Kennwort auslesen
+   netsh wlan show networks                                        #Wlan SSID auslesen
+
+   portqry -n 192.168.100.51 -e 9001 -p UDP                        #UDP Port Scan
+
+ ```
+ 
+ 
+   ### Chapter 3 - SQL Befehle
+   ```powershell
+
+   #SQL Script starten via sqlcmd
+   sqlcmd -E -S instanz\db -i C:\temp\skript.sql  #starts a sql skript invoke
+
+
+ ```
+
+### Chapter 4 - Exchange 
+   ```powershell
+
+#Import Exchange Module (Snapin)
+Add-PSSnapin Microsoft.Exchange.Management.PowerShell.SnapIn #Snapin Exchange 
+
+#get Aliasadresse
+get-mailbox -OrganizationalUnit "OU=206090,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" | select Name,SamAccountName -ExpandProperty EmailAddresses | select Name,SamAccountName,SMTPAddress | sort samaccountname | export-scv d:\temp\adresses.csv
+
+#get Exchange all Adress + Alias
+Get-Mailbox -ResultSize Unlimited -OrganizationalUnit "OU=211759,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" | Select DisplayName,PrimarySmtpAddress, @{Name="EmailAddresses";Expression={($_.EmailAddresses | Where-Object {$_ -clike "smtp*"} | ForEach-Object {$_ -replace "smtp:",""}) -join ","}} | Sort-Object DisplayName | export-csv '\\ASP-Admin\D$\UserPST\Temp\testsss.csv' -Delimiter ";" -NoType -Encoding UTF8  
+
+#Mailboxen mit Weiterleitung (Forward)
+Get-Mailbox -OrganizationalUnit "OU=206090,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" | Where {$_.ForwardingAddress -ne $null} | Select Name, Alias, ForwardingAddress, DeliverToMailboxAndForward
+
+#Mailboxsize
+#Mailboxsize
+Get-Mailbox -OrganizationalUnit "OU=203962,OU=AT,OU=ASP-Kunden,DC=Asp01dom,DC=local" -ResultSize Unlimited | 
+    Get-MailboxStatistics | 
+    Sort-Object TotalItemSize -Descending | 
+    Select-Object DisplayName, Alias, @{Name="TotalItemSize (MB)"; Expression={$_.TotalItemSize.Value.ToMB()}}
+```
+
+ 
+  ### Chapter 5 - Windows Stuff
+   ```powershell
+
+   #Energieeinstellungen
+   powercfg -SETACTIVE 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c           #Höchstleistung
+   powercfg -SETACTIVE 381b4222-f694-41f0-9685-ff5bb260df2e           #Ausbalanciert
+   powercfg -SETACTIVE a1841308-3541-4fab-bc81-f71556f20b4a           #Energiesparmodus
+
+   #Speicherplatz C:\Windows
+   DISM.exe /Online /Cleanup-Image /StartComponentCleanup /ResetBase 
+
+   #Papierkorb leeren
+   Clear-RecycleBin -Force                         #Papierkorb leeren
+   Remove-Item -Path 'D:\$Recycle.Bin\*' -Recurse -Force -ErrorAction SilentlyContinue
+
+   #Netlaufwerk Force entfernen
+   Remove-SmbMapping -RemotePath \\server\share -LocalPath Z: -Force  #remove SMBShare
+
+   #Helligkeit setzen
+   (Get-WmiObject -Namespace root/WMI -Class WmiMonitorBrightnessMethods).WmiSetBrightness(1,100) #Helligkeit 100 ist der Wert für die Helligkeit
+
+   #Akku Status anzeigen
+   Get-WmiObject win32_battery | Select-Object -expandProperty EstimatedChargeRemaining           #Akku Anzeige %
+
+   #Ram auslesen in GB
+   (Get-WmiObject -Class Win32_PhysicalMemory | Select-Object -expandProperty Capacity)/1GB        #Ram Auslesen und auf GB umrechnen
+
+   #IPv4 auslesen
+   Get-NetIPAddress -AddressFamily IPv4 | where-object IPAddress -notmatch "^(169)|(127)" | Sort-Object IPAddress | select IPaddress,Interface* #ipv4
+
+  #Startzeit PC auslesen
+   (gcim win32_operatingsystem).LastBootUpTime
+
+   #Freien Speicher von C: auselsen
+   (gcim win32_logicaldisk -filter "deviceid = 'C:'").FreeSpace/1gb
+
+   #oder mit PSDrive
+   (gdr c).Free/1gb
+
+   #Icons aus dll exportieren
+   Export-Icon C:\windows\system32\imageres.dll             #export ico example:shell32.dll #dsuiext.dll
+
+   Get-CimInstance -ClassName Win32_BIOS                       # Retrieve BIOS information
+   Get-CimInstance -ClassName Win32_DiskDrive                  # Retrieve information about locally connected physical disk devices
+   Get-CimInstance -ClassName Win32_PhysicalMemory             # Retrieve information about install physical memory (RAM)
+   Get-CimInstance -ClassName Win32_NetworkAdapter             # Retrieve information about installed network adapters (physical + virtual)
+   Get-CimInstance -ClassName Win32_VideoController            # Retrieve information about installed graphics / video card (GPU)
+
+   Get-CimClass -Namespace root\cimv2                          # Explore the various WMI classes available in the root\cimv2 namespace
+   Get-CimInstance -Namespace root -ClassName __NAMESPACE      # Explore the child WMI namespaces underneath the root\cimv2 namespace
+
+   #SID auslesen: Variante 2
+   (New-Object System.Security.Principal.NTAccount('233711_001')).Translate([System.Security.Principal.SecurityIdentifier]).Value #get SID
+
+   #Symlink (mlink)
+    & cmd.exe /c "mklink /j D:\bmdcom\bmdcom281843\FILES D:\bmdcom\bmdcom_Latest\FILES" | out-null
+      
+   #Install Google Chrome
+   $LocalTempDir = $env:TEMP; $ChromeInstaller = "ChromeInstaller.exe"; (new-object    System.Net.WebClient).DownloadFile('http://dl.google.com/chrome/install/375.126/chrome_installer.exe', "$LocalTempDir\$ChromeInstaller"); &          "$LocalTempDir\$ChromeInstaller" /silent /install; $Process2Monitor =  "ChromeInstaller"; Do { $ProcessesFound = Get-Process | ?{$Process2Monitor -contains $_.Name} | Select-Object -ExpandProperty Name; If ($ProcessesFound) { "Still running:    $($ProcessesFound -join ', ')" | Write-Host; Start-Sleep -Seconds 2 } else { rm "$LocalTempDir\$ChromeInstaller" -ErrorAction SilentlyContinue -Verbose } } Until (!$ProcessesFound) #Install Google Chrome
+   
+   #Set SSL FLags for SSL Client
+   Set-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
+   Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client\SNI19.0\GeneralFlags\Flag2" -Name "Value" -Value 1 -Force -Confirm:$false
+
+#Teams App neu bereitstellen
+%windir%\explorer.exe shell:AppsFolder\MSTeams_8wekyb3d8bbwe!MSTeams
+
+#Symlink oder Mlink von einem Ordner - Target
+Get-ChildItem -Path "D:\bmdcom\BMDWeb220598" | Select Name, LinkType, Target
+
+#ganzer Pfad
+Get-ChildItem -Path "D:\bmdcom\" -Recurse -Force | Where-Object { $_.Attributes -match "ReparsePoint" } | select-Object FullName, LinkType, Target
+
+#55 Zeit
+c:
+cd \
+cd data\bmd_data\bin
+start bmdwin.exe /w /P#ZEIT#/start800
+
+#5 Prozesse mit meister CPU
+Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 Name, Id, CPU
+
+#CMD als SYSTEM starten
+psexec.exe -s -i cmd.exe
+
+#CMD als SYSTEM starten
+psexec -sid cmd
+
+#typische exen (Drucker) killen
+
+Prozessname	                  Beschreibung
+PrintIsolationHost.exe	      Druckprozess-Isolation, oft in WOW64-Instanz
+splwow64.exe	               „Spooler WOW64“ – Vermittelt zwischen 32- und 64-Bit
+printfilterpipelinesvc.exe	   Teil der Druckverarbeitungspipeline
+spoolsv.exe	Hauptdruckdienst (Spooler)
+
+pskill spoolsv.exe
+pskill 
+
+#Debug von Parametern EXE (Strings - Sysinternal)
+strings.exe bmdntcs.exe > bmdntcs.txt
+
+
+#Windows 11 aktivieren
+irm https://get.activated.win | iex #Info: https://massgrave.dev/
+
+#Defender Check exclusion
+$(get-mpPreference).ExclusionProcess
+$(get-mpPreference).AttackSurfaceReductionOnlyExclusions
+
+
+#Download BMDNTCS Erstinstall ISO via PS7 & curl
+   #install PS7
+   winget install --id Microsoft.PowerShell --source winget
+   
+   #download ISO to temp
+   $Url = "https://cdn.bmd.com/ntcs/erstinstallation.iso"
+   $OutFile = "C:\temp\erstinstallation.iso"
+   curl -L -C - -o $OutFile $Url
+
+
+WSL Linux:
+wsl -d Ubuntu -- bash -lc "koreader
+
+wsl bash -ic "koreader"
+
+
+
+
+ ```
+
+### Chapter 5b - Azure Portal - Run Command Script
+
+  ```powershell
+#neuen lokalen Admin anlegen
+net user NeuerAdmin "SicheresPasswort123!" /add
+net localgroup Administrators NeuerAdmin /add
+ ```
+
+
+
+### Chapter 5c - SSH - Terminal
+
+  ```powershell
+#via SSH verbinden 
+ssh ma1r1@192.168.0.106
+
+#File kopieren z.b. auf Raspberry
+scp D:\temp_privat\Trattenbach-Netzwerk.drawio.svg ma1r1@192.168.0.106:/home/ma1r1/
+ ```
+
+
+### Chapter 6 - Examples , Function
+ 
+   ##### Function - SID auslesen: Variante 1
+   ```powershell
+
+   #SID auslesen
+   function Get-SID-From-User {
+       param (
+           [string]$User
+       )
+   
+       $User_tmp = Get-ADUser $User
+       $SID_Value = $User_tmp.SID.Value
+       Write-Host "SID von $User : $SID_Value" -ForegroundColor Cyan
+   }
+
+   #Beispiel:
+   Get-SID-From-User -User "tul046"
+
+   ```
+
+ ##### Function - Thumbnail setzen (AD User)
+   ```powershell
+   #Thumbnail setzen (AD User)
+      $user = "its999-dummy"
+      $photo = [byte[]](Get-Content "D:\temp\mai156\test.png" -Encoding byte)
+      Set-ADUser $user -Replace @{thumbnailPhoto=$photo}
+
+   ```
+
+ 
+   ##### Function - Check if the correct IP Syntax is returned
+   ```powershell
+
+#Check if the correct IP Syntax is returned
+$input8 = "192.168.1.11"
+$Octet = '(?:0?0?[0-9]|0?[1-9][0-9]|1[0-9]{2}|2[0-5][0-5]|2[0-4][0-9])' #matches 0-255, and not higher than 255
+[regex] $IPv4Regex = "^(?:$Octet\.){3}$Octet$" #match an actual IP address instead of a number between 0 and 255 on its own
+'1.10.100.0' -match $IPv4Regex #Check
+if ("$input8" -match $IPv4Regex){
+   [System.Windows.Forms.MessageBox]::Show("Correct IP syntax...")
+}else{
+   [System.Windows.Forms.MessageBox]::Show("wronge IP syntax...")
+}
+
+ ```
+
+   ##### Function Break - WaitForTextFile Function
+   ```powershell
+
+#Function Break - WaitForTextFile Function
+function WaitForTextFile {
+    param([string]$PathToFile)
+
+    # Überprüfen, ob die Datei vorhanden ist
+    while (-not (Test-Path $PathToFile)) {
+        Write-Host "Warte auf Datei: $PathToFile" -ForegroundColor Yellow
+        Start-Sleep -Milliseconds 1000
+    }
+
+    $currentTime = Get-Date
+    Write-Host "Datei gefunden: $PathToFile" -ForegroundColor Green
+    Write-Host "Datum und Uhrzeit: $currentTime" -ForegroundColor Green
+}
+
+# Beispielaufruf der Funktion
+WaitForTextFile -PathToFile "D:\tmp\test.txt"
+
+ ```
+
+   ##### Function ip Spoofing v2
+   ```powershell
+
+   #ip Spoofing v2
+   function Test-IPRange {
+       param (
+           [string]$Subnet = "10.22.40",
+           [int]$StartRange = 1,
+           [int]$EndRange = 254
+       )
+   
+       $StartRange..$EndRange | ForEach-Object {
+           $ip = "$Subnet.$_"
+           if (Test-Connection -ComputerName $ip -Count 1 -Quiet) {
+               Write-Host "$ip is active" -ForegroundColor Green
+           } else {
+               Write-Host "$ip is inactive" -ForegroundColor Red
+           }
+       }
+   }
+
+   # Beispielaufruf:
+   Test-IPRange -Subnet "192.168.1" -StartRange 1 -EndRange 254
+ 
+ ```
+   ##### Function ip Port Spoofing v3
+   ```powershell
+function Test-PortConnections {
+    param (
+        [string[]]$TargetHosts = @("localhost"),
+        [int[]]$Ports = @(80),
+        [int]$PortRangeStart,
+        [int]$PortRangeEnd,
+        [int]$Timeout = 250,
+        [int]$Interval = 3,
+        [int]$Count = -1,
+        [switch]$Ping,
+        [string]$Subnet = "",
+        [int]$StartRange = 1,
+        [int]$EndRange = 254,
+        [switch]$prioPort
+    )
+
+    # Validierung der Eingabewerte
+    if ($Ports -and ($Ports -lt 1 -or $Ports -gt 65535)) {
+        throw "Ports müssen zwischen 1 und 65535 liegen."
+    }
+
+    if ($PortRangeStart -or $PortRangeEnd) {
+        if ($PortRangeStart -lt 1 -or $PortRangeStart -gt 65535) {
+            throw "PortRangeStart muss zwischen 1 und 65535 liegen."
+        }
+        if ($PortRangeEnd -lt 1 -or $PortRangeEnd -gt 65535) {
+            throw "PortRangeEnd muss zwischen 1 und 65535 liegen."
+        }
+        if ($PortRangeStart -gt $PortRangeEnd) {
+            throw "PortRangeStart muss kleiner oder gleich PortRangeEnd sein."
+        }
+    }
+
+    if ($Timeout -lt 0) {
+        throw "Timeout muss eine positive Ganzzahl sein."
+    }
+
+    if ($StartRange -lt 1 -or $EndRange -gt 254 -or $StartRange -gt $EndRange) {
+        throw "StartRange muss zwischen 1 und 254 liegen und kleiner oder gleich EndRange sein."
+    }
+
+    # Erstelle eine Liste von Ports, falls ein Bereich angegeben wurde
+    $PortList = @()
+    if ($PortRangeStart -and $PortRangeEnd) {
+        $PortList += $PortRangeStart..$PortRangeEnd
+    }
+    if ($Ports) {
+        $PortList += $Ports
+    }
+    $PortList = $PortList | Select-Object -Unique | Sort-Object
+
+    if ($Subnet) {
+        $TargetHosts = @()
+        $StartRange..$EndRange | ForEach-Object {
+            $TargetHosts += "$Subnet.$_"
+        }
+    }
+
+    $currentIteration = 0
+    $successCount = 0
+    $failureCount = 0
+
+    # Ausgabe der Überschrift
+    Write-Host "---------------------------------------------------" -ForegroundColor Cyan
+    Write-Host " Zeitstempel           | Host/IP             | Port | Status         | Latenz (ms)" -ForegroundColor Yellow
+    Write-Host "---------------------------------------------------"
+
+    while ($Count -eq -1 -or $currentIteration -lt $Count) {
+        if ($prioPort) {
+            foreach ($Port in $PortList) {
+                foreach ($TargetHost in $TargetHosts) {
+                    $result = Test-HostPortConnection -TargetHost $TargetHost -Port $Port -Ping:$Ping -Timeout $Timeout
+                    if ($result.Status) {
+                        $successCount++
+                    } else {
+                        $failureCount++
+                    }
+                }
+            }
+        } else {
+            foreach ($TargetHost in $TargetHosts) {
+                foreach ($Port in $PortList) {
+                    $result = Test-HostPortConnection -TargetHost $TargetHost -Port $Port -Ping:$Ping -Timeout $Timeout
+                    if ($result.Status) {
+                        $successCount++
+                    } else {
+                        $failureCount++
+                    }
+                }
+            }
+        }
+
+        $currentIteration++
+
+        # Ausgabe einer Leerzeile nach jeder Abfragerunde, wenn Count > 1 oder kein Count angegeben
+        if ($Count -ne 1) {
+            Write-Host ""  # Leerzeile
+        }
+
+        Start-Sleep -Seconds $Interval
+    }
+
+    # Ausgabe der Zusammenfassung
+    Write-Host "---------------------------------------------------" -ForegroundColor Cyan
+    Write-Host "Tests abgeschlossen: Erfolgreich: $successCount, Fehlgeschlagen: $failureCount" -ForegroundColor Yellow
+}
+
+function Test-HostPortConnection {
+    param (
+        [string]$TargetHost,
+        [int]$Port,
+        [switch]$Ping,
+        [int]$Timeout
+    )
+
+    try {
+        $ResolvedIPs = if ($TargetHost -match '\d{1,3}(\.\d{1,3}){3}') {
+            $TargetHost
+        } else {
+            [System.Net.Dns]::GetHostAddresses($TargetHost) | Select-Object -First 1
+        }
+    } catch {
+        Write-Host "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Fehler bei der DNS-Auflösung für $TargetHost." -ForegroundColor Red
+        return @{ Status = $false }
+    }
+
+    if ($Ping) {
+        $pingResult = Test-Connection -ComputerName $TargetHost -Count 1 -ErrorAction SilentlyContinue
+        if ($pingResult) {
+            $output = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - $TargetHost ($ResolvedIPs) | Port: N/A | Status: Ping erfolgreich | Latenz: $($pingResult.ResponseTime) ms"
+            Write-Host $output -ForegroundColor Green
+            return @{ Status = $true }
+        } else {
+            Write-Host "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - $TargetHost ($ResolvedIPs) | Port: N/A | Status: Ping fehlgeschlagen" -ForegroundColor Red
+            return @{ Status = $false }
+        }
+    } else {
+        $TCPClient = [System.Net.Sockets.TcpClient]::new()
+        $Stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+        
+        try {
+            $Result = $TCPClient.ConnectAsync($ResolvedIPs, $Port).Wait($Timeout)
+            $Stopwatch.Stop()
+            $Latency = $Stopwatch.ElapsedMilliseconds
+            
+            if ($Result) {
+                $output = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - $TargetHost ($ResolvedIPs) | Port: $Port | Status: Erfolgreich | Latenz: $Latency ms"
+                Write-Host $output -ForegroundColor Green
+                return @{ Status = $true }
+            } else {
+                Write-Host "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - $TargetHost ($ResolvedIPs) | Port: $Port | Status: Fehlgeschlagen" -ForegroundColor Red
+                return @{ Status = $false }
+            }
+        } catch [System.Net.Sockets.SocketException] {
+            if ($_.Exception.SocketErrorCode -eq [System.Net.Sockets.SocketError]::ConnectionRefused) {
+                Write-Host "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - $TargetHost ($ResolvedIPs) | Port: $Port | Status: Verbindung abgelehnt" -ForegroundColor Red
+            } elseif ($_.Exception.SocketErrorCode -eq [System.Net.Sockets.SocketError]::TimedOut) {
+                Write-Host "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - $TargetHost ($ResolvedIPs) | Port: $Port | Status: Zeitüberschreitung" -ForegroundColor Red
+            } else {
+                Write-Host "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - $TargetHost ($ResolvedIPs) | Port: $Port | Status: Fehler - $($_.Exception.Message)" -ForegroundColor Red
+            }
+            return @{ Status = $false }
+        } finally {
+            $TCPClient.Close()
+        }
+    }
+}
+
+# Beispiel-Aufrufe:
+##Einfach
+# Single TargetHost - Single Port - Test: Ping
+    Test-PortConnections -TargetHosts @("orf.at") -Ports @(80) -Ping -Count 1
+# Single TargetHost - Single Port - Test: Port
+    Test-PortConnections -TargetHosts @("orf.at") -Ports @(80) -Count 1
+# Multi TargetHosts - Single Port - Test: Ports
+    Test-PortConnections -TargetHosts @("192.168.0.1","orf.at","192.167.0.1") -Ports @(80) -Count 1
+# Multi TargetHosts - Multi Port - prio IP
+    Test-PortConnections -TargetHosts @("192.168.0.1","orf.at","192.167.0.1") -Ports @(22,80,443) -Count 1
+# Multi TargetHosts - Multi Port - prio Port
+    Test-PortConnections -TargetHosts @("192.168.0.1","orf.at","192.167.0.1") -Ports @(22,80,443) -prioPort -Count 1
+
+##Subnet
+# SubNet Target - - Test: Ping
+    Test-PortConnections -Subnet "10.22.40" -StartRange 1 -EndRange 254 -Count 1 -Ping
+# SubNet Target - Single Port - prio IP
+    Test-PortConnections -Subnet "192.168.0" -StartRange 1 -EndRange 10 -Ports @(80) -prioPort -Count 1
+# SubNet Target - Multi Port - prio Port
+    Test-PortConnections -Subnet "192.168.0" -StartRange 1 -EndRange 10 -Ports @(80,443) -prioPort -Count 1
+
+##Port Range
+# Single TargetHosts - Port Range - Test: Ports
+    Test-PortConnections -TargetHosts @("80.121.194.193") -PortRangeStart 20 -PortRangeEnd 25 -prioPort -Count 1
+# Single TargetHosts - Multi Ports + Port Range - Test: Ports
+    Test-PortConnections -TargetHosts @("80.121.194.193") -Ports @(22,80,443,8000,8123) -PortRangeStart 20 -PortRangeEnd 25 -prioPort -Count 1
+# Multi TargetHosts - Multi Ports + Port Range - Test: Ports
+    Test-PortConnections -TargetHosts @("10.250.251.11","10.250.251.12","10.250.251.13","orf.at","asp-dms-stable") -Ports @(22,80,81,86,443,8080,8443) -PortRangeStart 30464 -PortRangeEnd 30470 -prioPort -Count 1
+# SubNet Target - Port Range
+    Test-PortConnections -Subnet "10.250.251" -StartRange 1 -EndRange 254 -PortRangeStart 30464 -PortRangeEnd 30470 -Count 1
+
+
+
+
+```
+
+   ##### CMD - extend FSLogix Disk with Diskpart
+   ```powershell
+
+   diskpart
+   sel vdisk file ="U:\UPD\256094_002_S-1-5-21-1644491937-813497703-725345543-59430\Profile_256094_002.VHDX"
+   expand vdisk maximum=102400
+   attach vdisk
+   sel par 1
+   extend
+   detach vdisk
+   exit
+
+ ```
+
+   ##### Function - kill all Tasks 
+   ```powershell
+
+function kill-all-Tasks {
+
+$password = Get-Content C:\Users\mai156-admin\Desktop\bin\cred_mai156-admin-asp01dom.txt | ConvertTo-SecureString
+$User = "ASP01DOM\mai156-admin"
+$Credential = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList $User, $password
+
+$TaskServers = @(
+    "aspch-task-l.Asp01dom.local",
+    "aspch-task-s.Asp01dom.local",
+    "ASP-TASK-S.Asp01dom.local",
+    "ASP-TASK-L.Asp01dom.local",
+    "ASPDE-TASK-S.Asp01dom.local",
+    "ASPDE-TASK-L.Asp01dom.local",
+    "ASP-TASK-S-01.Asp01dom.local",
+    "ASP-TASK-S-02.Asp01dom.local",
+    "ASP-TASK-L-01.Asp01dom.local",
+    "ASP-TASK-L-02.Asp01dom.local"
+)
+
+foreach ($TaskServer in $TaskServers) {
+    $result = Invoke-Command -ComputerName $TaskServer -Authentication Credssp -Credential $Credential -ScriptBlock {
+        # Prozessnamen mit Dateiendung
+        $prozessName = "BMDNTCS.exe"
+        # Maximale CPU-Laufzeit in Minuten
+        $maxCpuLaufzeit = 120
+        # Prozesse suchen
+        $prozesse = Get-WmiObject Win32_Process | Where-Object { $_.Name -eq $prozessName }
+
+        foreach ($prozess in $prozesse) {
+            # CPU-Laufzeit überprüfen
+            $cpuLaufzeit = (Get-Date) - [Management.ManagementDateTimeConverter]::ToDateTime($prozess.CreationDate)
+
+            if ($cpuLaufzeit.TotalMinutes -ge $maxCpuLaufzeit) {
+                [PSCustomObject]@{
+                    ServerName = $env:COMPUTERNAME
+                    ProzessName = $prozessName
+                    ProcessID = $prozess.ProcessId
+                    CPUUsageMinutes = $cpuLaufzeit.TotalMinutes
+                    Status = "Beendet"
+                }
+                Stop-Process -Id $prozess.ProcessId -Force
+            } else {
+                [PSCustomObject]@{
+                    ServerName = $env:COMPUTERNAME
+                    ProzessName = $prozessName
+                    ProcessID = $prozess.ProcessId
+                    CPUUsageMinutes = $cpuLaufzeit.TotalMinutes
+                    Status = "Noch nicht beendet"
+                }
+            }
+        }
+
+        if ($prozesse.Count -eq 0) {
+            [PSCustomObject]@{
+                ServerName = $env:COMPUTERNAME
+                ProzessName = $prozessName
+                ProcessID = $null
+                CPUUsageMinutes = $null
+                Status = "Kein Prozess gefunden"
+            }
+        }
+    }
+
+    # Ausgabe der Ergebnisse auf der lokalen Maschine
+    $result
+}
+} 
+# Beispielaufruf der Funktion
+kill-all-Tasks
+
+ ```
+   ##### gPing via Scoop
+
+   ```powershell
+#Scoop installieren als non-Admin
+   irm get.scoop.sh | iex
+   # You can use proxies if you have network trouble in accessing GitHub, e.g.
+   irm get.scoop.sh -Proxy 'http://<ip:port>' | iex
+
+#Scoop installieren als Admin
+   irm get.scoop.sh -outfile 'install.ps1'
+   .\install.ps1 -RunAsAdmin [-OtherParameters ...]
+   # I don't care about other parameters and want a one-line command
+   iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+
+#Install gPing via Scoop
+   scoop install gping
+
+#Usage & URL
+gping 172.19.19.11 8.8.8.8
+
+#URL gPing   https://github.com/orf/gping?tab=readme-ov-file#usage-saxophone
+#URL scoop   https://github.com/ScoopInstaller/Install#for-admin
+
+ ```
+
