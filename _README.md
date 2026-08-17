@@ -426,6 +426,15 @@ irm https://get.activated.win | iex #Info: https://massgrave.dev/
 $(get-mpPreference).ExclusionProcess
 $(get-mpPreference).AttackSurfaceReductionOnlyExclusions
 
+#Defender Record starten
+New-MpPerformanceRecording -RecordTo C:\temp\defender.etl
+
+#Defender Ergebnise Anzeigen
+Get-MpPerformanceReport -Path C:\temp\defender.etl -TopFiles 20
+
+#Defender Quick Scan
+Start-MpScan -ScanType QuickScan
+
 
 #Download BMDNTCS Erstinstall ISO via PS7 & curl
    #install PS7
