@@ -435,6 +435,12 @@ Get-MpPerformanceReport -Path C:\temp\defender.etl -TopFiles 20
 #Defender Quick Scan
 Start-MpScan -ScanType QuickScan
 
+#Defender lokal deaktivieren
+Set-MpPreference -DisableRealtimeMonitoring $true
+
+#Defender lokal aktivieren
+Set-MpPreference -DisableRealtimeMonitoring $false
+
 
 #Download BMDNTCS Erstinstall ISO via PS7 & curl
    #install PS7
